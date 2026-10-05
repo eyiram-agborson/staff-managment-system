@@ -1,1 +1,47 @@
-<p>page-layout works!</p>
+
+<main class="fixed bg-yellow-500 top-0 z-50 w-full border-b items-center">
+      <div class="mx-auto grid h-[55px] w-full grid-cols-[auto_1fr_auto] items-center gap-4 px-5 md:px-8">
+            <!-- Logo -->
+                <div class="flex min-w-0 items-center">
+
+            <img class="w-6 h-6" src="etzlogo.svg" alt="logo">
+      </div>
+
+     <nav class="min-w-0 items-center justify-center gap-1 "><!-- //hidden md:flex -->
+
+      <a
+        routerLink="/dashboard"
+        routerLinkActive="nav-link-active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="nav-link">
+        Dashboard
+      </a>
+
+        <a
+          routerLink="/staff"
+          routerLinkActive="nav-link-active"
+          [routerLinkActiveOptions]="{ exact: false }"
+          class="nav-link">
+          Staff
+        </a>
+
+        <a
+          routerLink="/tasks"
+          routerLinkActive="nav-link-active"
+          [routerLinkActiveOptions]="{ exact: false }"
+          class="nav-link">
+          Tasks
+        </a>
+
+      <!-- Logout Icon -->
+      <i
+        class="fa-solid fa-right-from-bracket ml-1 cursor-pointer text-[15px] text-red-500 transition hover:text-red-600"
+        title="Logout"
+        aria-label="Logout">
+      </i>
+
+</nav>
+</div>
+</main>
+
+

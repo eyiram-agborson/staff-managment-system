@@ -14,6 +14,12 @@ export const routes: Routes = [
         },
         {
             path: 'profile', loadComponent: ()=> import('./profile/profile').then(m=>m.Profile)
+        },
+        {
+            path: 'staff', loadComponent: ()=> import('./staff/staff').then(m =>m.Staff)
+        },
+        {
+            path:'tasks', loadComponent: ()=> import('./tasks/tasks').then(m => m.Tasks)
         }
     ]
 }
