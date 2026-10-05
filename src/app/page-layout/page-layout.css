@@ -14,9 +14,8 @@
   color: #111827;
 }
 
-/* ACTIVE */
 .nav-link.nav-link-active {
-  background-color: #edf6ff !important;
-  color: #2f87da !important;
+  background-color: #dceeff !important;
+  color: #2474c6 !important;
   font-weight: 600;
 }
