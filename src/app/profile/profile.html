@@ -1,1 +1,85 @@
-<p>profile works!</p>
+   <div class="mt-10 mx-8">
+    <button (click)="goBack()" class="flex items-center gap-2 cursor-pointer">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-move-left preview-icon"><path d="M6 8L2 12L6 16"/><path d="M2 12H22"/></svg>
+        Back
+    </button>
+</div>
+
+<div  class="mx-8 mt-10 flex items-center justify-center">
+  <form form="ngForm">
+    <div  class="grid grid-cols-2 md:gap-x-30 gap-y-5 ">
+              <div class="flex flex-col">
+                <label>First name</label>
+                <input
+                  type="text"
+                  name="firstName"
+                  placeholder="First name"
+                  class="md:w-FULL [550px] border border-gray-400 py-2 px-3 rounded-[8px]"
+                >
+              </div>
+
+              <div class="flex flex-col">
+                <label>Last name</label>
+              <input
+                type="text"
+                name="lastName"
+                placeholder="Last name"
+                class="w-full [550px] border border-gray-400 py-2 px-3 rounded-[8px]"
+              >
+              </div>
+          <!-- </div> -->
+
+
+
+
+              <!-- <div class="flex justify-between"> -->
+                  <div class="flex flex-col relative left- 40">
+                  <label>Gender</label>
+                <select class="w-full [250px] border border-gray-400 py-2 px-3 rounded-[8px]">
+                  <option value="">Select Gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+                </div>
+
+                <div class="flex flex-col relative right- 40">
+                  <label>Date of birth</label>
+                  <input
+                    type="date"
+                    name="dob"
+                    placeholder="Enter your date of birth"
+                    class="w-full [250px] border border-gray-400 py-2 px-3 rounded-[8px]">
+                </div>
+                <!-- </div> -->
+              <!-- </div> -->
+
+
+
+              <!-- <div class="grid grid-cols-2 md:gap-30"> -->
+              <div class="flex flex-col">
+                <label>Unit</label>
+              <input
+                type="text"
+                name="unit"
+                placeholder="Department"
+                class="md:w-full [550px] border border-gray-400 py-2 px-3 rounded-[8px]"
+              >
+              </div>
+
+              <div class="flex flex-col ">
+                <label>Email;</label>
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                class="full w-[550px] border border-gray-400 py-2 px-3 rounded-[8px]"
+              >
+              </div>
+            </div>
+
+            </form>
+
+     </div>
+
+
+
