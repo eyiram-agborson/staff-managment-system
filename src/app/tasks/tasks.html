@@ -1,0 +1,119 @@
+<div class="relative min-h-screen px-4 py-5 md:px-8">
+
+  <!-- Header -->
+  <div class="mb-4 flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-4 md:px-6">
+
+    <h1 class="text-base font-semibold text-gray-900 md:text-lg">
+      Tasks
+    </h1>
+
+    <button type="button"
+      class="h-9 rounded-md bg-blue-600 px-4 text-xs font-medium text-white transition hover:bg-blue-700 md:text-sm">
+      Add Task
+    </button>
+
+  </div>
+
+
+  <!-- Search + Filters -->
+  <div class="mb-4 flex flex-col gap-3 rounded-lg border border-gray-200 bg-white px-4 py-4 md:flex-row md:items-center md:justify-end md:px-6">
+
+    <!-- Search -->
+    <div class="w-full md:w-[280px]">
+
+      <!-- Search will go here later -->
+
+    </div>
+
+
+    <!-- Status Filter -->
+    <nz-select
+      nzAllowClear
+      nzPlaceHolder="Status"
+      class="w-full md:w-[150px]">
+
+      <nz-option
+        nzValue="Pending"
+        nzLabel="Pending">
+      </nz-option>
+
+      <nz-option
+        nzValue="In-Progress"
+        nzLabel="In-Progress">
+      </nz-option>
+
+      <nz-option
+        nzValue="Completed"
+        nzLabel="Completed">
+      </nz-option>
+
+    </nz-select>
+
+
+    <!-- Priority Filter -->
+    <nz-select
+      nzAllowClear
+      nzPlaceHolder="Priority"
+      class="w-full md:w-[150px]">
+
+      <nz-option
+        nzValue="High"
+        nzLabel="High">
+      </nz-option>
+
+      <nz-option
+        nzValue="Medium"
+        nzLabel="Medium">
+      </nz-option>
+
+      <nz-option
+        nzValue="Low"
+        nzLabel="Low">
+      </nz-option>
+
+    </nz-select>
+
+  </div>
+
+
+  <!-- Table -->
+  <div class="overflow-x-auto rounded-lg border border-gray-200 bg-white">
+    <nz-table #taskTable [nzData]="listOfTasks">
+      <thead>
+        <tr>
+          <th>Staff Id</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Assigned To</th>
+          <th>Priority</th>
+          <th>Status</th>
+          <th>Deadline</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (task of taskTable.data; track task.id) {
+          <tr>
+            <td>{{ task.id }}</td>
+            <td>{{ task.title }}</td>
+            <td>{{ task.description }}</td>
+            <td>{{ task.assignedTo }}</td>
+            <td>{{ task.priority }}</td>
+            <td>{{ task.status }}</td>
+            <td>{{ task.deadline }}</td>
+            <td>
+              <button type="button"
+                class="text-sm text-gray-600 transition hover:text-blue-600">
+                ⋮
+              </button>
+            </td>
+          </tr>
+        }
+
+      </tbody>
+    </nz-table>
+
+  </div>
+
+</div>

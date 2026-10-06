@@ -72,77 +72,77 @@
     }
   ],
   "tasks": [
-    {
-      "id": 1,
-      "title": "Prepare monthly report",
-      "description": "Prepare the monthly departmental performance report.",
-      "assignedTo": 1,
-      "priority": "high",
-      "status": "pending",
-      "deadline": "2026-10-10"
-    },
-    {
-      "id": 2,
-      "title": "Update company website",
-      "description": "Update the company website with the latest information.",
-      "assignedTo": 2,
-      "priority": "medium",
-      "status": "in-progress",
-      "deadline": "2026-10-12"
-    },
-    {
-      "id": 3,
-      "title": "Review financial records",
-      "description": "Review the third-quarter financial records.",
-      "assignedTo": 3,
-      "priority": "high",
-      "status": "completed",
-      "deadline": "2026-10-05"
-    },
-    {
-      "id": 4,
-      "title": "Create social media plan",
-      "description": "Create the social media content plan for the next month.",
-      "assignedTo": 4,
-      "priority": "medium",
-      "status": "pending",
-      "deadline": "2026-10-15"
-    },
-    {
-      "id": 5,
-      "title": "Review office supplies",
-      "description": "Check current office supplies and prepare a restocking list.",
-      "assignedTo": 5,
-      "priority": "low",
-      "status": "completed",
-      "deadline": "2026-10-03"
-    },
-    {
-      "id": 6,
-      "title": "Resolve server issue",
-      "description": "Investigate and resolve the reported server connectivity issue.",
-      "assignedTo": 6,
-      "priority": "high",
-      "status": "in-progress",
-      "deadline": "2026-10-08"
-    },
-    {
-      "id": 7,
-      "title": "Organize team meeting",
-      "description": "Schedule and organize the next departmental meeting.",
-      "assignedTo": 1,
-      "priority": "low",
-      "status": "pending",
-      "deadline": "2026-10-18"
-    },
-    {
-      "id": 8,
-      "title": "Employee onboarding",
-      "description": "Prepare onboarding materials for new employees.",
-      "assignedTo": 7,
-      "priority": "medium",
-      "status": "in-progress",
-      "deadline": "2026-10-20"
-    }
-  ]  
+  {
+    "id": 1,
+    "title": "Prepare monthly report",
+    "description": "Prepare the monthly departmental performance report.",
+    "assignedTo": "Ama",
+    "priority": "high",
+    "status": "pending",
+    "deadline": "2026-10-10"
+  },
+  {
+    "id": 2,
+    "title": "Update company website",
+    "description": "Update the company website with the latest information.",
+    "assignedTo": "Kojo",
+    "priority": "medium",
+    "status": "in-progress",
+    "deadline": "2026-10-12"
+  },
+  {
+    "id": 3,
+    "title": "Review financial records",
+    "description": "Review the third-quarter financial records.",
+    "assignedTo": "Yaw",
+    "priority": "high",
+    "status": "completed",
+    "deadline": "2026-10-05"
+  },
+  {
+    "id": 4,
+    "title": "Create social media plan",
+    "description": "Create the social media content plan for the next month.",
+    "assignedTo": "Akosua",
+    "priority": "medium",
+    "status": "pending",
+    "deadline": "2026-10-15"
+  },
+  {
+    "id": 5,
+    "title": "Review office supplies",
+    "description": "Check current office supplies and prepare a restocking list.",
+    "assignedTo": "Kofi",
+    "priority": "low",
+    "status": "completed",
+    "deadline": "2026-10-03"
+  },
+  {
+    "id": 6,
+    "title": "Resolve server issue",
+    "description": "Investigate and resolve the reported server connectivity issue.",
+    "assignedTo": "Adwoa",
+    "priority": "high",
+    "status": "in-progress",
+    "deadline": "2026-10-08"
+  },
+  {
+    "id": 7,
+    "title": "Organize team meeting",
+    "description": "Schedule and organize the next departmental meeting.",
+    "assignedTo": "Ama",
+    "priority": "low",
+    "status": "pending",
+    "deadline": "2026-10-18"
+  },
+  {
+    "id": 8,
+    "title": "Employee onboarding",
+    "description": "Prepare onboarding materials for new employees.",
+    "assignedTo": "Esi",
+    "priority": "medium",
+    "status": "in-progress",
+    "deadline": "2026-10-20"
+  }
+]  
 }
