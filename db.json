@@ -3,7 +3,7 @@
     {
       "id": 1,
       "name": "Ama Mensah",
-      "email": "ama.mensah@company.com",
+      "email": "ama.mensah@gmail.com",
       "role": "user",
       "department": "Human Resources",
       "position": "HR Officer",
@@ -13,7 +13,7 @@
     {
       "id": 2,
       "name": "Kojo Asante",
-      "email": "kojo.asante@company.com",
+      "email": "kojo.asante@gmail.com",
       "role": "user",
       "department": "Information Technology",
       "position": "Software Developer",
@@ -23,7 +23,7 @@
     {
       "id": 3,
       "name": "Abena Owusu",
-      "email": "abena.owusu@company.com",
+      "email": "abena.owusu@gmail.com",
       "role": "user",
       "department": "Finance",
       "position": "Accountant",
@@ -33,7 +33,7 @@
     {
       "id": 4,
       "name": "Kwame Boateng",
-      "email": "kwame.boateng@company.com",
+      "email": "kwame.boateng@gmail.com",
       "role": "user",
       "department": "Marketing",
       "position": "Marketing Officer",
@@ -43,7 +43,7 @@
     {
       "id": 5,
       "name": "Akosua Addo",
-      "email": "akosua.addo@company.com",
+      "email": "akosua.addo@gmail.com",
       "role": "user",
       "department": "Operations",
       "position": "Operations Officer",
@@ -53,7 +53,7 @@
     {
       "id": 6,
       "name": "Yaw Ofori",
-      "email": "yaw.ofori@company.com",
+      "email": "yaw.ofori@gmail.com",
       "role": "user",
       "department": "Information Technology",
       "position": "Systems Administrator",
@@ -63,7 +63,7 @@
     {
       "id": 7,
       "name": "Admin User",
-      "email": "admin@company.com",
+      "email": "admin@gmail.com",
       "role": "admin",
       "department": "Management",
       "position": "Administrator",

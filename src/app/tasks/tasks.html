@@ -1,16 +1,20 @@
 <div class="relative max-h-screen px-4 py-5 md:px-8">
 
   <!-- Header -->
-  <div class="mb-4 flex items-center justify-between rounded-lg px-4 py-4 md:px-0">
+  <div class="mb-4 flex items-center justify-between rounded-lg px-4 py-4 md:px-3">
 
     <h1 class="text-base font-semibold text-gray-900 md:text-2xl">
       Tasks
     </h1>
 
     <div class="flex justify-between items-center gap-5">
-      <button type="button"
-      class="h-9 rounded-sm bg-blue-400 px-4 md:px-7 text-xs font-medium !text-white transition hover:bg-blue-700 md:text-sm">
+      <button type="button" (click)="openAddTask()"
+      class="h-9 rounded-sm bg-blue-400 px-4 md:px-7 text-xs font-medium !text-white transition hover:bg-blue-500 md:text-sm">
       Add Task
+    </button>
+      <button type="button" (click)="openAssignTask()"
+      class="h-9 rounded-sm bg-blue-400 px-4 md:px-7 text-xs font-medium !text-white transition hover:bg-blue-500 md:text-sm">
+      Assign Task
     </button>
 
     <nz-select nzAllowClear nzPlaceHolder="Status" class="w-full md:w-[150px]">
@@ -57,12 +61,21 @@
             <td>{{ task.status }}</td>
             <td>{{ task.deadline }}</td>
             <td class="text-center">
-              <button type="button"
-                class="text-sm text-gray-600 transition hover:text-blue-600">
+             <div nz-dropdown [nzDropdownMenu]="actionMenu" nzPlacement="bottomRight">
+              <button type="button" class="text-sm text-gray-600 transition hover:text-blue-600">
                 ⋮
               </button>
+            </div>
             </td>
           </tr>
+          <!-- Dropdown menu -->
+            <nz-dropdown-menu #actionMenu="nzDropdownMenu">
+              <ul nz-menu>
+                <li nz-menu-item (click)="viewTask(task)">View</li>
+                <li nz-menu-item (click)="editTask(task)">Edit</li>
+                <li class="!text-red-500" nz-menu-item (click)="deleteTask(task)">Delete</li>
+              </ul>
+            </nz-dropdown-menu>
         }
 
       </tbody>
@@ -71,3 +84,113 @@
   </div>
 
 </div>
+
+
+<!-- Add task -->
+<nz-modal [(nzVisible)]="isAddTask" nzTitle="Add Task" [nzFooter]="addTaskFooter" (nzOnCancel)="closeAddTask()">
+  <ng-container *nzModalContent>
+    <div class="space-y-4">
+
+      <!-- Task Title -->
+      <div>
+        <label class="mb-1 block text-sm font-medium text-gray-700">
+          Task Title
+        </label>
+        <input nz-input type="text" placeholder="Enter task title" />
+      </div>
+
+      <!-- Description -->
+      <div>
+        <label class="mb-1 block text-sm font-medium text-gray-700">
+          Description
+        </label>
+        <textarea nz-input rows="3" placeholder="Enter task description">
+        </textarea>
+      </div>
+
+      <!-- Priority -->
+      <div>
+        <label class="mb-1 block text-sm font-medium text-gray-700">
+          Priority
+        </label>
+        <nz-select nzPlaceHolder="Select priority" class="w-full">
+          <nz-option nzValue="high" nzLabel="High" />
+          <nz-option nzValue="medium" nzLabel="Medium" />
+          <nz-option nzValue="low" nzLabel="Low" />
+        </nz-select>
+      </div>
+
+      <!-- Deadline -->
+      <div>
+        <label class="mb-1 block text-sm font-medium text-gray-700">
+          Deadline
+        </label>
+        <input nz-input type="date" />
+      </div>
+    </div>
+
+  </ng-container>
+
+</nz-modal>
+ <ng-template #addTaskFooter >
+  <div class="justify-end w-full flex gap-4">
+  
+    <button type="button" (click)="closeAddTask()" class="!text-red-400 rounded-md font-medium border border-red-300 px-4 py-2 md:px-7 text-sm text-gray-600 hover:bg-gray-50">
+      Cancel
+    </button>
+    <button type="button" class="ml-2 rounded-md bg-blue-500 px-4 py-2 md:px-10 text-sm !text-white hover:bg-blue-400">
+      Save
+    </button>
+  </div>
+</ng-template>
+
+<nz-modal [(nzVisible)]="isAssignTask" nzTitle="Assign Task" [nzFooter]="assignTaskFooter" (nzOnCancel)="closeAssignTask()">
+  <ng-container *nzModalContent>
+
+    <div class="space-y-4">
+      <!-- Task -->
+      <div>
+        <label class="mb-1 block text-sm font-medium text-gray-700">
+          Task
+        </label>
+        <nz-select nzPlaceHolder="Select task" class="w-full">
+          @for (task of listOfTasks; track task.id) {
+            <nz-option [nzValue]="task.id" [nzLabel]="task.title" />
+          }
+        </nz-select>
+      </div>
+
+
+      <!-- Staff -->
+      <div>
+        <label class="mb-1 block text-sm font-medium text-gray-700">
+          Assign To
+        </label>
+
+        <nz-select nzPlaceHolder="Select staff member" class="w-full">
+          <nz-option nzValue="Ama" nzLabel="Ama" />
+          <nz-option nzValue="Kojo" nzLabel="Kojo" />
+          <nz-option nzValue="Yaw" nzLabel="Yaw" />
+          <nz-option nzValue="Akosua" nzLabel="Akosua" />
+          <nz-option nzValue="Kofi" nzLabel="Kofi" />
+        </nz-select>
+
+      </div>
+
+    </div>
+
+  </ng-container>
+
+</nz-modal>
+
+<ng-template #assignTaskFooter>
+  <div class="flex gap-4 justify-end">
+    <button type="button" (click)="closeAssignTask()" class="rounded-sm !text-red-400 font-medium border border-red-300 md:px-8 px-4 py-2 text-sm text-gray-600 hover:bg-gray-50">
+    Cancel
+  </button>
+  <button type="button" class="ml-2 rounded-md bg-blue-500 px-4 py-2 md:px-10 text-sm !text-white hover:bg-blue-600">
+    Assign Task
+  </button>
+  </div>
+  
+</ng-template>
