@@ -1,15 +1,21 @@
-<div class="min-h-screen bg-slate-50 px-4 py-6 md:px-8">
+<div class="dashboard-bg h-[calc(100vh-70px)] overflow-hidden px-4 py-6 md:px-5">
 
-  <!-- Page Header -->
+  <div class="relative h-full">
+
+  <!-- Background decoration -->
+  <div class="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-blue-100/40"></div>
+
+  <div class="pointer-events-none absolute -bottom-32 -left-20 h-72 w-72 rounded-full bg-purple-100/40"></div>
+
+  <!-- Dashboard content -->
+  <div class="relative z-10">
+
+ <!-- Page Header -->
   <div class="mb-6 flex items-start justify-between">
     <div>
       <h1 class="text-xl font-semibold text-gray-900 md:text-2xl">
         Welcome back!
       </h1>
-
-      <p class="mt-1 text-xs text-gray-500 md:text-sm">
-        
-      </p>
 
       <p class="mt-1 text-xs text-gray-400 md:text-sm">
         Here's what's happening with your work today.
@@ -26,7 +32,7 @@
 <div class="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
 
   <!-- Total Staff -->
-  <div class="md:pl-5 rounded-lg border-2 border-purple-200 bg-white px-4 py-3 shadow-sm">
+  <div class="md:pl-5 md:py-[-10px] rounded-lg border-2 border-purple-200 bg-white px-4 py-3 shadow-sm">
     <p class="text-xs font-medium text-purple-600 md:text-[16px]">
       Total Staff
     </p>
@@ -173,5 +179,9 @@
     </div>
 
   </div>
+  </div>
+
+</div>
+ 
 
 </div>

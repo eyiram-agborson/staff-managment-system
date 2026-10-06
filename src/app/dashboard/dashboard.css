@@ -1,0 +1,7 @@
+.dashboard-bg {
+  background-color: #f8fafc;
+  background-image:
+    linear-gradient(rgba(59, 130, 246, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.025) 1px, transparent 1px);
+  background-size: 32px 32px;
+}

@@ -1,50 +1,74 @@
-<main class="fixed top-0 z-50 w-full border-b border-gray-200">
-    <div class="mx-auto grid h-[55px] w-full grid-cols-[1fr_auto_1fr] items-center px-5 md:px-8">
+<!-- Page Layout -->
+<div class="relative min-h-screen overflow-hidden bg-slate-50">
 
-        <!-- Logo -->
-        <div class="flex items-center justify-start">
-            <img class="h-5 w-5" src="etzlogo.svg" alt="logo">
+    <!-- Background decoration -->
+    <div class="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-blue-100/40"></div>
+
+    <div class="pointer-events-none absolute -bottom-32 -left-20 h-72 w-72 rounded-full bg-purple-100/40"></div>
+
+
+    <!-- Navbar -->
+    <main class="fixed top-0 z-50 w-full border-b border-gray-200 bg-white/90 backdrop-blur-sm">
+
+        <div class="mx-auto grid h-[55px] w-full grid-cols-[1fr_auto_1fr] items-center px-5 md:px-8">
+
+            <!-- Logo -->
+            <div class="flex items-center justify-start">
+                <img class="h-5 w-5" src="etzlogo.svg" alt="logo">
+            </div>
+
+
+            <!-- Navigation -->
+            <nav class="flex items-center justify-center gap-7 text-[16px]">
+
+                <a
+                    routerLink="/dashboard"
+                    routerLinkActive="nav-link-active"
+                    [routerLinkActiveOptions]="{ exact: true }"
+                    class="nav-link">
+                    Dashboard
+                </a>
+
+                <a
+                    routerLink="/staff"
+                    routerLinkActive="nav-link-active"
+                    [routerLinkActiveOptions]="{ exact: false }"
+                    class="nav-link">
+                    Staff
+                </a>
+
+                <a
+                    routerLink="/tasks"
+                    routerLinkActive="nav-link-active"
+                    [routerLinkActiveOptions]="{ exact: false }"
+                    class="nav-link">
+                    Tasks
+                </a>
+
+            </nav>
+
+
+            <!-- Logout -->
+            <div class="flex items-center justify-end">
+
+                <i
+                    class="fa-solid fa-right-from-bracket h-6 w-6 cursor-pointer text-[15px] text-red-500 transition hover:text-red-600"
+                    title="Logout"
+                    aria-label="Logout">
+                </i>
+
+            </div>
+
         </div>
 
-        <!-- Navigation -->
-        <nav class="flex items-center justify-center gap-7 text-[16px]">
-            <a
-                routerLink="/dashboard"
-                routerLinkActive="nav-link-active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                class="nav-link">
-                Dashboard
-            </a>
+    </main>
 
-            <a
-                routerLink="/staff"
-                routerLinkActive="nav-link-active"
-                [routerLinkActiveOptions]="{ exact: false }"
-                class="nav-link">
-                Staff
-            </a>
 
-            <a
-                routerLink="/tasks"
-                routerLinkActive="nav-link-active"
-                [routerLinkActiveOptions]="{ exact: false }"
-                class="nav-link">
-                Tasks
-            </a>
-        </nav>
+    <!-- Page Content -->
+    <div class="relative z-10 min-h-screen w-full pt-[65px]">
 
-        <!-- Logout -->
-        <div class="flex items-center justify-end">
-            <i
-                class=" w-6 h-6 fa-solid fa-right-from-bracket cursor-pointer text-[15px] text-red-500 transition hover:text-red-600"
-                title="Logout"
-                aria-label="Logout">
-            </i>
-        </div>
+        <router-outlet></router-outlet>
 
     </div>
-</main>
 
-<div class="min-h-screen w-full pt-[65px]">
-    <router-outlet></router-outlet>
 </div>
