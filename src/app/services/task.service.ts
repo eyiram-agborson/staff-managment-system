@@ -20,13 +20,13 @@ export class TaskService {
     return this.http.post<Task>(environment.taskApi, task)
   }
 
-  deleteTask(id:number): Observable<any>{
+  deleteTask(id:number | string): Observable<any>{
     const url = `${environment.taskApi}/${id}`
     return this.http.delete<any>(url)
   }
 
   editTask(task: Task): Observable<Task>{
-    const url = `${environment.taskApi}/ ${task.id}`
+    const url = `${environment.taskApi}/${task.id}`
     return this.http.put<Task>(url, task)
   }
 

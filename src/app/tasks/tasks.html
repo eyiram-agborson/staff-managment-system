@@ -87,7 +87,7 @@
 
 
 <!-- Add task -->
-<nz-modal [(nzVisible)]="isAddTask" nzTitle="Add Task" [nzFooter]="addTaskFooter" (nzOnCancel)="closeAddTask()">
+<nz-modal [(nzVisible)]="isAddTask "  nzNoAnimation nzTitle="Add Task" [nzFooter]="addTaskFooter" (nzOnCancel)="closeAddTask()">
   <ng-container *nzModalContent>
     <div class="space-y-4">
 
@@ -158,7 +158,7 @@
 </ng-template>
 
 <!-- Assign task -->
-<nz-modal [(nzVisible)]="isAssignTask" nzTitle="Assign Task" [nzFooter]="assignTaskFooter" (nzOnCancel)="closeAssignTask()">
+<nz-modal [(nzVisible)]="isAssignTask"  nzNoAnimation nzTitle="Assign Task" [nzFooter]="assignTaskFooter" (nzOnCancel)="closeAssignTask()">
   <ng-container *nzModalContent>
 
     <div class="space-y-4">
@@ -207,8 +207,8 @@
   </div>
 </ng-template>
 
-
-<nz-modal [(nzVisible)]="isViewTask" nzTitle="Task Details" [nzFooter]="viewTaskFooter" (nzOnCancel)="closeViewTask()">
+<!-- View task -->
+<nz-modal [(nzVisible)]="isViewTask"  nzNoAnimation nzTitle="Task Details" [nzFooter]="viewTaskFooter" (nzOnCancel)="closeViewTask()">
   <ng-container *nzModalContent>
 
     @if (selectedTask) {
@@ -277,7 +277,7 @@
 </ng-template>
 
 <!-- Edit task -->
- <nz-modal [(nzVisible)]="isEditTask" nzTitle="Edit Task" [nzFooter]="editTaskFooter" (nzOnCancel)="closeEditTask()">
+ <nz-modal [(nzVisible)]="isEditTask"  nzNoAnimation nzTitle="Edit Task" [nzFooter]="editTaskFooter" (nzOnCancel)="closeEditTask()">
   <ng-container *nzModalContent>
 
     @if (selectedTask) {
@@ -346,6 +346,43 @@
     </button>
     <button type="button" (click)="saveUpdatedTask()" class="rounded-md bg-blue-500 px-6 py-2 text-sm !text-white hover:bg-blue-600">
       Save
+    </button>
+  </div>
+</ng-template>
+
+
+<!-- Delete Task -->
+<nz-modal [(nzVisible)]="isDeleteTask" nzNoAnimation nzTitle="Delete Task" [nzFooter]="deleteTaskFooter"
+  (nzOnCancel)="closeDeleteTaskModal()">
+
+  <ng-container *nzModalContent>
+
+    @if (selectedTask) {
+      <div class="space-y-3">
+        <p class="text-sm text-gray-700">
+          Are you sure you want to delete this task?
+        </p>
+        <p class="font-medium text-gray-900">
+          {{ selectedTask.title }}
+        </p>
+        <p class="text-sm text-gray-500">
+          This action cannot be undone.
+        </p>
+      </div>
+    }
+
+  </ng-container>
+
+</nz-modal>
+
+<ng-template #deleteTaskFooter>
+  <div class="flex w-full justify-end gap-2">
+    <button type="button" (click)="closeDeleteTaskModal()"
+      class="rounded-md border border-gray-300 px-6 py-2 text-sm text-gray-600 hover:bg-gray-50">
+      Cancel
+    </button>
+    <button type="button" (click)="confirmDeleteTask()" class="rounded-md bg-red-500 px-6 py-2 text-sm !text-white hover:bg-red-600">
+      Delete
     </button>
   </div>
 </ng-template>

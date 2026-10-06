@@ -152,76 +152,22 @@
       "deadline": "2026-10-20"
     },
     {
-      "id": "DqWTSxUFxmw",
-      "title": "Testing API",
-      "description": "Testing progress",
+      "id": "SGYTMOuJMh8",
+      "title": "Test2dfgh",
+      "description": "testing",
       "assignedTo": "",
       "priority": "medium",
       "status": "pending",
       "deadline": "2026-10-06"
     },
     {
-      "id": "WNGjVMWlX40",
-      "title": "",
-      "description": "",
+      "id": "IWOiR4cVCbA",
+      "title": "test ament",
+      "description": "testing",
       "assignedTo": "",
       "priority": "medium",
       "status": "pending",
-      "deadline": ""
-    },
-    {
-      "id": "sDB4WgmQTrg",
-      "title": "",
-      "description": "",
-      "assignedTo": "",
-      "priority": "medium",
-      "status": "pending",
-      "deadline": ""
-    },
-    {
-      "id": "Qe7XmvMoT0M",
-      "title": "",
-      "description": "",
-      "assignedTo": "",
-      "priority": "medium",
-      "status": "pending",
-      "deadline": ""
-    },
-    {
-      "id": "3j6OPOjJklo",
-      "title": "",
-      "description": "",
-      "assignedTo": "",
-      "priority": "medium",
-      "status": "pending",
-      "deadline": ""
-    },
-    {
-      "id": "HWqINPKdUfY",
-      "title": "",
-      "description": "",
-      "assignedTo": "",
-      "priority": "medium",
-      "status": "pending",
-      "deadline": ""
-    },
-    {
-      "id": "wJWrXef5crQ",
-      "title": "",
-      "description": "",
-      "assignedTo": "",
-      "priority": "medium",
-      "status": "pending",
-      "deadline": ""
-    },
-    {
-      "id": "ONV9xPQqPcU",
-      "title": "",
-      "description": "",
-      "assignedTo": "",
-      "priority": "medium",
-      "status": "pending",
-      "deadline": ""
+      "deadline": "2026-10-06"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
