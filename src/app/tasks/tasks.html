@@ -132,6 +132,7 @@
   </ng-container>
 
 </nz-modal>
+
  <ng-template #addTaskFooter >
   <div class="justify-end w-full flex gap-4">
   
@@ -144,6 +145,7 @@
   </div>
 </ng-template>
 
+<!-- Assign task -->
 <nz-modal [(nzVisible)]="isAssignTask" nzTitle="Assign Task" [nzFooter]="assignTaskFooter" (nzOnCancel)="closeAssignTask()">
   <ng-container *nzModalContent>
 
@@ -159,7 +161,6 @@
           }
         </nz-select>
       </div>
-
 
       <!-- Staff -->
       <div>
@@ -192,5 +193,147 @@
     Assign Task
   </button>
   </div>
-  
+</ng-template>
+
+
+<nz-modal [(nzVisible)]="isViewTask" nzTitle="Task Details" [nzFooter]="viewTaskFooter" (nzOnCancel)="closeViewTask()">
+  <ng-container *nzModalContent>
+
+    @if (selectedTask) {
+      <div class="space-y-4">
+
+        <div>
+          <p class="text-xs text-gray-500">Task</p>
+          <p class="font-medium text-gray-900">
+            {{ selectedTask.title }}
+          </p>
+        </div>
+
+        <div>
+          <p class="text-xs text-gray-500">Description</p>
+          <p class="text-sm text-gray-700">
+            {{ selectedTask.description }}
+          </p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+
+          <div>
+            <p class="text-xs text-gray-500">Assigned To</p>
+            <p class="text-sm text-gray-900">
+              {{ selectedTask.assignedTo }}
+            </p>
+          </div>
+
+          <div>
+            <p class="text-xs text-gray-500">Priority</p>
+            <p class="text-sm text-gray-900">
+              {{ selectedTask.priority }}
+            </p>
+          </div>
+
+          <div>
+            <p class="text-xs text-gray-500">Status</p>
+            <p class="text-sm text-gray-900">
+              {{ selectedTask.status }}
+            </p>
+          </div>
+
+          <div>
+            <p class="text-xs text-gray-500">Deadline</p>
+            <p class="text-sm text-gray-900">
+              {{ selectedTask.deadline }}
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    }
+
+  </ng-container>
+
+</nz-modal>
+
+<ng-template #viewTaskFooter>
+  <div class="flex w-full justify-end">
+    <button type="button" (click)="closeViewTask()" class="rounded-md bg-blue-500 px-6 py-2 text-sm text-white hover:bg-blue-600">
+      Close
+    </button>
+  </div>
+
+</ng-template>
+
+<!-- Edit task -->
+ <nz-modal [(nzVisible)]="isEditTask" nzTitle="Edit Task" [nzFooter]="editTaskFooter" (nzOnCancel)="closeEditTask()">
+  <ng-container *nzModalContent>
+
+    @if (selectedTask) {
+
+      <div class="space-y-4">
+
+        <div>
+          <label class="mb-1 block text-sm font-medium text-gray-700">
+            Task Title
+          </label>
+
+          <input nz-input type="text" [(ngModel)]="selectedTask.title" />
+        </div>
+
+        <div>
+          <label class="mb-1 block text-sm font-medium text-gray-700">
+            Description
+          </label>
+          <textarea nz-input rows="3" [(ngModel)]="selectedTask.description">
+          </textarea>
+        </div>
+
+        <div>
+          <label class="mb-1 block text-sm font-medium text-gray-700">
+            Priority
+          </label>
+
+          <nz-select [(ngModel)]="selectedTask.priority" class="w-full">
+            <nz-option nzValue="high" nzLabel="High" />
+            <nz-option nzValue="medium" nzLabel="Medium" />
+            <nz-option nzValue="low" nzLabel="Low" />
+          </nz-select>
+        </div>
+
+        <div>
+          <label class="mb-1 block text-sm font-medium text-gray-700">
+            Status
+          </label>
+
+          <nz-select [(ngModel)]="selectedTask.status" class="w-full">
+            <nz-option nzValue="pending" nzLabel="Pending" />
+            <nz-option nzValue="in-progress" nzLabel="In Progress" />
+            <nz-option nzValue="completed" nzLabel="Completed" />
+          </nz-select>
+        </div>
+
+        <div>
+          <label class="mb-1 block text-sm font-medium text-gray-700">
+            Deadline
+          </label>
+          <input nz-input type="date" [(ngModel)]="selectedTask.deadline" />
+        </div>
+
+      </div>
+
+    }
+
+  </ng-container>
+
+</nz-modal>
+
+<ng-template #editTaskFooter>
+  <div class="flex w-full justify-end gap-2">
+    <button type="button" (click)="closeEditTask()" class="rounded-md border border-gray-300 px-6 py-2 text-sm text-gray-600 hover:bg-gray-50">
+      Cancel
+    </button>
+    <button type="button" (click)="saveEditedTask()" class="rounded-md bg-blue-500 px-6 py-2 text-sm text-white hover:bg-blue-600">
+      Save
+    </button>
+  </div>
 </ng-template>

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-// import { DatePipe } from '@angular/common';
 
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzSelectModule } from 'ng-zorro-antd/select';
@@ -8,6 +7,7 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzDropdownModule } from 'ng-zorro-antd/dropdown';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzInputModule } from 'ng-zorro-antd/input';
+
 import { Task } from '../models/task.model';
 import { TaskService } from '../services/task.service';
 
@@ -22,7 +22,6 @@ import { TaskService } from '../services/task.service';
     NzDropdownModule,
     NzMenuModule,
     NzInputModule
-    // DatePipe
   ],
   templateUrl: './tasks.html',
   styleUrl: './tasks.css'
@@ -31,15 +30,31 @@ export class Tasks implements OnInit {
 
   listOfTasks: Task[] = [];
   isAddTask = false;
-  isAssignTask= false;
-  
+  isAssignTask = false;
+  isViewTask = false;
+  isEditTask = false;
+  isDeleteTask = false;
+  newTask: Task = {
+    id: 0,
+    title: '',
+    description: '',
+    assignedTo: '',
+    priority: 'medium',
+    status: 'pending',
+    deadline: ''
+  }
+
+  // Currently selected task
+  selectedTask: Task | null = null;
+
   constructor(private taskService: TaskService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getTasks();
   }
 
-  getTasks() {
+  // GET TASKS
+  getTasks(): void {
     this.taskService.getTasks().subscribe({
       next: (res) => {
         this.listOfTasks = res;
@@ -50,31 +65,99 @@ export class Tasks implements OnInit {
     });
   }
 
-  openAddTask(): void {
-  this.isAddTask = true;
+  //Add task
+  addTask(task: Task){
+    this.taskService.addTask(this.newTask).subscribe({
+      next: (res)=>{
+
+      }
+    })
   }
 
-  openAssignTask(): void {
-    this.isAssignTask = true;
+  //Edit Task
+  updateTask(task: Task){
+    this.taskService.editTask(task).subscribe({
+      next: (res)=>{
+        console.log('Task updated, res')
+      },
+      error: (err)=>{
+        console.log('Could not update task', err)
+      }
+    })
+    }
+
+    saveUpdatedTask():void{
+      if(!this.selectedTask){
+        return
+      }
+      this.taskService.editTask(this.selectedTask).subscribe({
+        next: (res)=> {
+          console.log('Updated sucessfully', res)
+        },
+        error: (err)=>{
+          console.error('Error updating', err)
+        }
+      })
+
+    }
+
+  // ADD TASK
+  openAddTask(): void {
+    this.isAddTask = true;
   }
 
   closeAddTask(): void {
     this.isAddTask = false;
   }
 
+  // ASSIGN TASK
+  openAssignTask(): void {
+    this.isAssignTask = true;
+  }
+
   closeAssignTask(): void {
     this.isAssignTask = false;
   }
 
+  // VIEW TASK
   viewTask(task: Task): void {
-  console.log('View task:', task);
+    this.selectedTask = task;
+    this.isViewTask = true;
   }
 
+  closeViewTask(): void {
+    this.isViewTask = false;
+    this.selectedTask = null;
+  }
+
+  // EDIT TASK
   editTask(task: Task): void {
-    console.log('Edit task:', task);
+    this.selectedTask = { ...task };
+    this.isEditTask = true;
   }
 
-  deleteTask(task: Task): void {
-    console.log('Delete task:', task);
+  saveEditedTask(): void {
+    // API call will go here
   }
+
+  closeEditTask(): void {
+    this.isEditTask = false;
+    this.selectedTask = null;
+  }
+
+  // DELETE TASK
+  deleteTask(task: Task): void {
+    this.selectedTask = task;
+    this.isDeleteTask = true;
+  }
+
+  confirmDeleteTask(): void {
+    // API call will go here
+  }
+
+  closeDeleteTaskModal(): void {
+    this.isDeleteTask = false;
+    this.selectedTask = null;
+  }
+
 }
