@@ -51,6 +51,7 @@ export class Tasks implements OnInit {
 
   ngOnInit(): void {
     this.getTasks();
+    this.listOfTasks;
   }
 
   // GET TASKS
@@ -66,26 +67,29 @@ export class Tasks implements OnInit {
   }
 
   //Add task
-  addTask(task: Task){
+  addTask(){
     this.taskService.addTask(this.newTask).subscribe({
       next: (res)=>{
-
+        console.log('Task added', res)
+        this.listOfTasks.push(res)
+        this.newTask = {
+          id: 0,
+          title: '',
+          description: '',
+          assignedTo: '',
+          priority: 'medium',
+          status: 'pending',
+          deadline: ''
+        }
+      },
+      error: (err)=>{
+        console.error('Error adding task', err)
+        this.isAddTask = false;
       }
     })
   }
 
   //Edit Task
-  updateTask(task: Task){
-    this.taskService.editTask(task).subscribe({
-      next: (res)=>{
-        console.log('Task updated, res')
-      },
-      error: (err)=>{
-        console.log('Could not update task', err)
-      }
-    })
-    }
-
     saveUpdatedTask():void{
       if(!this.selectedTask){
         return
@@ -96,6 +100,7 @@ export class Tasks implements OnInit {
         },
         error: (err)=>{
           console.error('Error updating', err)
+          this.isEditTask = false;
         }
       })
 
@@ -134,10 +139,6 @@ export class Tasks implements OnInit {
   editTask(task: Task): void {
     this.selectedTask = { ...task };
     this.isEditTask = true;
-  }
-
-  saveEditedTask(): void {
-    // API call will go here
   }
 
   closeEditTask(): void {
