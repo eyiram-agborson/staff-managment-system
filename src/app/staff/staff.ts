@@ -113,22 +113,55 @@ closeModal1() {
  }
 
 // API CALL
- fetchStaffData(){
-  this.userService.getUser(this.userQuery).subscribe({
-    next: (res)=>{
-      console.log("User API data",res)
-      // this.userData = res;
-      this.userData.set(res);
-      console.log("User data",this.userData())
+//  fetchStaffData(){
+//   this.userService.getUser(this.user).subscribe({
+//     next: (res)=>{
+//       console.log("User API data",res)
+//       // this.userData = res;
+//       this.userData.set(res);
+//       console.log("User data",this.userData())
+//     },
+//     error: (err)=>{
+//       console.log("Error fetching user data",err)
+//     },
+//     complete: ()=>{
+//       console.log("User data fetch complete")
+//     }
+//   })
+//  }
+
+fetchStaffData() {
+  this.userService.getUser().subscribe({
+    next: (res) => {
+
+      console.log('ALL API USERS:', res);
+
+      const search = this.userQuery.search.trim().toLowerCase();
+
+      const filteredUsers = search
+        ? res.filter(user => {
+            const fullName = `${user.fname} ${user.lname}`.toLowerCase();
+
+            return (
+              fullName.includes(search) ||
+              user.email.toLowerCase().includes(search) ||
+              user.department.toLowerCase().includes(search) ||
+              user.position.toLowerCase().includes(search)
+            );
+          })
+        : res;
+
+      console.log('SEARCH:', search);
+      console.log('FILTERED USERS:', filteredUsers);
+
+      this.userData.set(filteredUsers);
     },
-    error: (err)=>{
-      console.log("Error fetching user data",err)
-    },
-    complete: ()=>{
-      console.log("User data fetch complete")
+
+    error: (err) => {
+      console.error('Error fetching users:', err);
     }
-  })
- }
+  });
+}
 
 //  SEARCH QUERY
  giveToBehavior(){

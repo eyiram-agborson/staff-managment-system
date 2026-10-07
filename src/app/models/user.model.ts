@@ -11,17 +11,18 @@
 // }
 
 
-export class UserQuery {
-  search?: string;
-  page = 1;
-  limit = 10;
-  status = '';
-  department = '';
-}
+// export class UserQuery {
+//   search?: string;
+//   page = 1;
+//   limit = 10;
+//   status = '';
+//   department = '';
+// }
 
 export class User {
   id!: number;
-  name!: string;
+  fname!: string;
+  lname!: string;
   email!: string;
   phone!: string;
   gender!: 'male' | 'female';
@@ -34,4 +35,12 @@ export class User {
   //  page?: number;
   // limit?: number;
   // totalPage?: number;
+}
+
+export class UserQuery {
+  search = '';
+  page = 1;
+  limit = 10;
+  status = '';
+  department = '';
 }
