@@ -1,23 +1,26 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoleService {
 
-  // Replace current user with Kojo if you want to test for normal user
-  private currentUser = 'Ama';
-  // private currentUser = 'Kojo';
+  private currentUser = new BehaviorSubject<string>('Ama');
 
   getCurrentUser(): string {
-    return this.currentUser;
+    return this.currentUser.value;
+  }
+
+  getCurrentUser$(): Observable<string> {
+    return this.currentUser.asObservable();
   }
 
   setCurrentUser(name: string): void {
-    this.currentUser = name;
+    this.currentUser.next(name);
   }
 
   isAdmin(): boolean {
-    return this.currentUser === 'Ama';
+    return this.currentUser.value === 'Ama';
   }
 }

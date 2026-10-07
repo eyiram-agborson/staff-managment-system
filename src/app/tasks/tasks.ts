@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ChangeDetectorRef } from '@angular/core';
+
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzModalModule } from 'ng-zorro-antd/modal';
@@ -8,10 +9,10 @@ import { NzDropdownModule } from 'ng-zorro-antd/dropdown';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
+
 import { Task } from '../models/task.model';
 import { TaskService } from '../services/task.service';
 import { RoleService } from '../services/role.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tasks',
@@ -32,13 +33,18 @@ export class Tasks implements OnInit {
 
   listOfTasks: Task[] = [];
   filteredTasks: Task[] = [];
+
   selectedStatus = '';
   selectedPriority = '';
+
+  currentUser = '';
+
   isAddTask = false;
   isAssignTask = false;
   isViewTask = false;
   isEditTask = false;
   isDeleteTask = false;
+
   newTask: Task = {
     id: 0,
     title: '',
@@ -52,13 +58,18 @@ export class Tasks implements OnInit {
   selectedTask: Task | null = null;
 
   constructor(
-    private taskService: TaskService, private cdr: ChangeDetectorRef,
-    private roleService: RoleService, private notification: NzNotificationService,
-    private router:Router
+    private taskService: TaskService,
+    private cdr: ChangeDetectorRef,
+    private roleService: RoleService,
+    private notification: NzNotificationService
   ) {}
 
   ngOnInit(): void {
     this.getTasks();
+
+    this.roleService.getCurrentUser$().subscribe(user => {
+      this.currentUser = user;
+    });
   }
 
   // GET TASKS
@@ -81,9 +92,11 @@ export class Tasks implements OnInit {
       if (this.selectedStatus && task.status !== this.selectedStatus) {
         return false;
       }
+
       if (this.selectedPriority && task.priority !== this.selectedPriority) {
         return false;
       }
+
       return true;
     });
   }
@@ -101,16 +114,13 @@ export class Tasks implements OnInit {
     this.isAddTask = true;
   }
 
-//    openAddTask(): void {
-//   this.router.navigate(['/tasks/add']);
-// }
-
   closeAddTask(): void {
     this.isAddTask = false;
   }
 
   addTask(): void {
     this.isAddTask = false;
+
     this.taskService.addTask(this.newTask).subscribe({
       next: (res) => {
         console.log('Task added', res);
@@ -152,8 +162,9 @@ export class Tasks implements OnInit {
 
   // VIEW TASK
   viewTask(task: Task): void {
-
-    if (!this.roleService.isAdmin() && task.assignedTo !== this.roleService.getCurrentUser()
+    if (
+      !this.roleService.isAdmin() &&
+      task.assignedTo !== this.roleService.getCurrentUser()
     ) {
       this.notification.error(
         'Access Denied',
@@ -197,6 +208,7 @@ export class Tasks implements OnInit {
 
     // Make a copy of the task
     const task = { ...this.selectedTask };
+
     this.isEditTask = false;
     this.selectedTask = null;
 
@@ -234,6 +246,7 @@ export class Tasks implements OnInit {
     if (!this.selectedTask) {
       return;
     }
+
     const taskId = this.selectedTask.id;
     this.isDeleteTask = false;
     this.selectedTask = null;
