@@ -29,6 +29,9 @@ import { TaskService } from '../services/task.service';
 export class Tasks implements OnInit {
 
   listOfTasks: Task[] = [];
+  filteredTasks: Task[] = [];
+  selectedStatus= '';
+  selectedPriority= '';
   isAddTask = false;
   isAssignTask = false;
   isViewTask = false;
@@ -59,7 +62,8 @@ export class Tasks implements OnInit {
     this.taskService.getTasks().subscribe({
       next: (res) => {
         this.listOfTasks = res;
-              this.cdr.detectChanges();
+        this.filteredTasks = res;
+        this.cdr.detectChanges();
 
       },
       error: (err) => {
@@ -67,6 +71,22 @@ export class Tasks implements OnInit {
       }
     });
   }
+
+//Filter Tasks
+  filterTasks(){
+    this.filteredTasks = this.listOfTasks.filter(task=>{
+      if(this.selectedStatus && task.status !== this.selectedStatus){
+        return false;
+      }
+      if(this.selectedPriority && task.priority !== this.selectedPriority){
+        return false;
+      }
+      return true;
+    })
+      
+      
+  }
+
 
   //Add task
   addTask() {
