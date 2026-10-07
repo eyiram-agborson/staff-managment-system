@@ -122,51 +122,6 @@ closeModal1() {
 
 
 
-// fetchStaffData() {
-//   this.userService.getUser().subscribe({
-//     next: (res) => {
-
-//       const search = this.userQuery.search.trim().toLowerCase();
-//       const department = this.userQuery.department;
-//       const status = this.userQuery.status;
-
-//       const filteredUsers = res.filter(user => {
-
-//         const fullName =
-//           `${user.fname} ${user.lname}`.toLowerCase();
-
-//         const matchesSearch =
-//           !search ||
-//           fullName.includes(search) ||
-//           user.email.toLowerCase().includes(search) ||
-//           user.department.toLowerCase().includes(search) ||
-//           user.position.toLowerCase().includes(search);
-
-//         const matchesDepartment =
-//           !department ||
-//           user.department === department;
-
-//         const matchesStatus =
-//           !status ||
-//           user.status === status;
-
-//         return (
-//           matchesSearch &&
-//           matchesDepartment &&
-//           matchesStatus
-//         );
-//       });
-
-//       this.userData.set(filteredUsers);
-//     },
-
-//     error: (err) => {
-//       console.error('Error fetching users:', err);
-//     }
-//   });
-// }
-
-
 filterUsers() {
     // Get users from TanStack Query
     const users = this.usersQuery.data() ?? [];
@@ -235,5 +190,69 @@ filterFunction(filter: string){
 }
 
  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ // fetchStaffData() {
+//   this.userService.getUser().subscribe({
+//     next: (res) => {
+
+//       const search = this.userQuery.search.trim().toLowerCase();
+//       const department = this.userQuery.department;
+//       const status = this.userQuery.status;
+
+//       const filteredUsers = res.filter(user => {
+
+//         const fullName =
+//           `${user.fname} ${user.lname}`.toLowerCase();
+
+//         const matchesSearch =
+//           !search ||
+//           fullName.includes(search) ||
+//           user.email.toLowerCase().includes(search) ||
+//           user.department.toLowerCase().includes(search) ||
+//           user.position.toLowerCase().includes(search);
+
+//         const matchesDepartment =
+//           !department ||
+//           user.department === department;
+
+//         const matchesStatus =
+//           !status ||
+//           user.status === status;
+
+//         return (
+//           matchesSearch &&
+//           matchesDepartment &&
+//           matchesStatus
+//         );
+//       });
+
+//       this.userData.set(filteredUsers);
+//     },
+
+//     error: (err) => {
+//       console.error('Error fetching users:', err);
+//     }
+//   });
+// }
   
 
