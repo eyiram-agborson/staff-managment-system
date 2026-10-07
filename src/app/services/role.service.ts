@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class RoleService {
 
   // Replace current user with Kojo if you want to test for normal user
-  private currentUser = 'Kojo';
+  private currentUser = 'Ama';
   // private currentUser = 'Kojo';
 
   getCurrentUser(): string {
