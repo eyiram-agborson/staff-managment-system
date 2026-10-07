@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
+import { ChangeDetectorRef } from '@angular/core';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzModalModule } from 'ng-zorro-antd/modal';
@@ -47,7 +47,8 @@ export class Tasks implements OnInit {
   // Currently selected task
   selectedTask: Task | null = null;
 
-  constructor(private taskService: TaskService) {}
+  constructor(private taskService: TaskService, private cdr: ChangeDetectorRef
+) {}
 
   ngOnInit(): void {
     this.getTasks();
@@ -58,6 +59,8 @@ export class Tasks implements OnInit {
     this.taskService.getTasks().subscribe({
       next: (res) => {
         this.listOfTasks = res;
+              this.cdr.detectChanges();
+
       },
       error: (err) => {
         console.error('Error fetching tasks', err);
@@ -66,48 +69,95 @@ export class Tasks implements OnInit {
   }
 
   //Add task
-  addTask(task: Task){
-    this.taskService.addTask(this.newTask).subscribe({
-      next: (res)=>{
+  addTask() {
+    this.isAddTask = false;
 
+    this.taskService.addTask(this.newTask).subscribe({
+      next: (res) => {
+        console.log('Task added', res);
+
+        this.getTasks();
+
+        this.newTask = {
+          id: 0,
+          title: '',
+          description: '',
+          assignedTo: '',
+          priority: 'medium',
+          status: 'pending',
+          deadline: ''
+        };
+      },
+      error: (err) => {
+        console.error('Error adding task', err);
+        this.isAddTask = true;
       }
-    })
+    });
   }
 
   //Edit Task
-  updateTask(task: Task){
-    this.taskService.editTask(task).subscribe({
-      next: (res)=>{
-        console.log('Task updated, res')
-      },
-      error: (err)=>{
-        console.log('Could not update task', err)
-      }
-    })
-    }
-
     saveUpdatedTask():void{
       if(!this.selectedTask){
         return
       }
-      this.taskService.editTask(this.selectedTask).subscribe({
+      //makes copy of the task before deleting
+      const task = {...this.selectedTask}
+      this.isEditTask = false;
+      this.selectedTask = null;
+
+      this.taskService.editTask(task).subscribe({
         next: (res)=> {
           console.log('Updated sucessfully', res)
+          this.closeEditTask();
+          this.getTasks();
+
         },
         error: (err)=>{
           console.error('Error updating', err)
+          this.closeEditTask();
         }
       })
 
     }
 
+    //Delete
+confirmDeleteTask(): void {
+  if (!this.selectedTask) {
+    return;
+  }
+  const taskId = this.selectedTask.id;
+
+  this.isDeleteTask = false;
+  this.selectedTask = null;
+
+
+
+  this.taskService.deleteTask(taskId).subscribe({
+    next: (res) => {
+      console.log('Task deleted', res);
+      this.getTasks();
+
+      this.listOfTasks = this.listOfTasks.filter(
+        task => task.id !== this.selectedTask?.id
+      );
+
+      this.closeDeleteTaskModal();
+    },
+    error: (err) => {
+      console.error('Error deleting task', err);
+    }
+  });
+}
+
   // ADD TASK
   openAddTask(): void {
     this.isAddTask = true;
+    console.log('CLICKD')
   }
 
   closeAddTask(): void {
     this.isAddTask = false;
+    console.log('CANCEL')
   }
 
   // ASSIGN TASK
@@ -136,10 +186,6 @@ export class Tasks implements OnInit {
     this.isEditTask = true;
   }
 
-  saveEditedTask(): void {
-    // API call will go here
-  }
-
   closeEditTask(): void {
     this.isEditTask = false;
     this.selectedTask = null;
@@ -151,9 +197,6 @@ export class Tasks implements OnInit {
     this.isDeleteTask = true;
   }
 
-  confirmDeleteTask(): void {
-    // API call will go here
-  }
 
   closeDeleteTaskModal(): void {
     this.isDeleteTask = false;
