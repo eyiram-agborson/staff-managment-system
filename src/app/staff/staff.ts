@@ -4,8 +4,10 @@ import { UserService } from '../services/user.service';
 import { User, UserQuery } from '../models/user.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
+import { BehaviorSubject, debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { signal } from '@angular/core';
+
+import { injectQuery } from '@tanstack/angular-query-experimental';
 
 @Component({
   selector: 'app-staff',
@@ -21,15 +23,20 @@ export class Staff implements OnInit {
   profileModal = false
   isFilterModal = false
   isAddStaffOpen = false
-  searchQuery$ = new Subject<string>()
+  searchQuery$ = new BehaviorSubject<string>('');
   searchQuery = ""
   user: User
-  // userQuery: UserQuery
   userQuery = new UserQuery();
  
-
-  // userData: User[] = []
   userData = signal<User[]>([]);
+
+
+
+    // TANSTACK QUERY
+  usersQuery = injectQuery(() => ({
+    queryKey: ['users'],
+    queryFn: () => this.userService.getUser()
+  }));
 
 
     constructor(private router: Router, private userService: UserService) { 
@@ -44,7 +51,7 @@ export class Staff implements OnInit {
 
 
   ngOnInit(): void {
-    this.fetchStaffData()
+    this.filterUsers()
   }
 
 
@@ -112,56 +119,102 @@ closeModal1() {
   this.isAddStaffOpen = false
  }
 
-// API CALL
-//  fetchStaffData(){
-//   this.userService.getUser(this.user).subscribe({
-//     next: (res)=>{
-//       console.log("User API data",res)
-//       // this.userData = res;
-//       this.userData.set(res);
-//       console.log("User data",this.userData())
+
+
+
+// fetchStaffData() {
+//   this.userService.getUser().subscribe({
+//     next: (res) => {
+
+//       const search = this.userQuery.search.trim().toLowerCase();
+//       const department = this.userQuery.department;
+//       const status = this.userQuery.status;
+
+//       const filteredUsers = res.filter(user => {
+
+//         const fullName =
+//           `${user.fname} ${user.lname}`.toLowerCase();
+
+//         const matchesSearch =
+//           !search ||
+//           fullName.includes(search) ||
+//           user.email.toLowerCase().includes(search) ||
+//           user.department.toLowerCase().includes(search) ||
+//           user.position.toLowerCase().includes(search);
+
+//         const matchesDepartment =
+//           !department ||
+//           user.department === department;
+
+//         const matchesStatus =
+//           !status ||
+//           user.status === status;
+
+//         return (
+//           matchesSearch &&
+//           matchesDepartment &&
+//           matchesStatus
+//         );
+//       });
+
+//       this.userData.set(filteredUsers);
 //     },
-//     error: (err)=>{
-//       console.log("Error fetching user data",err)
-//     },
-//     complete: ()=>{
-//       console.log("User data fetch complete")
+
+//     error: (err) => {
+//       console.error('Error fetching users:', err);
 //     }
-//   })
-//  }
+//   });
+// }
 
-fetchStaffData() {
-  this.userService.getUser().subscribe({
-    next: (res) => {
 
-      console.log('ALL API USERS:', res);
+filterUsers() {
+    // Get users from TanStack Query
+    const users = this.usersQuery.data() ?? [];
+    const search = this.userQuery.search?.trim().toLowerCase() ?? '';
+    const department = this.userQuery.department;
+    const status = this.userQuery.status;
+    const filteredUsers = users.filter(user => {
 
-      const search = this.userQuery.search.trim().toLowerCase();
+      // Full name
+      const fullName =
+        `${user.fname} ${user.lname}`.toLowerCase();
 
-      const filteredUsers = search
-        ? res.filter(user => {
-            const fullName = `${user.fname} ${user.lname}`.toLowerCase();
 
-            return (
-              fullName.includes(search) ||
-              user.email.toLowerCase().includes(search) ||
-              user.department.toLowerCase().includes(search) ||
-              user.position.toLowerCase().includes(search)
-            );
-          })
-        : res;
+      // SEARCH
+      const matchesSearch =
+        !search ||
+        fullName.includes(search) ||
+        user.email.toLowerCase().includes(search) ||
+        user.department.toLowerCase().includes(search) ||
+        user.position.toLowerCase().includes(search);
 
-      console.log('SEARCH:', search);
-      console.log('FILTERED USERS:', filteredUsers);
+      // DEPARTMENT
+      const matchesDepartment =
+        !department ||
+        user.department === department;
 
-      this.userData.set(filteredUsers);
-    },
+      // STATUS
+      const matchesStatus =
+        !status ||
+        user.status === status;
 
-    error: (err) => {
-      console.error('Error fetching users:', err);
-    }
-  });
-}
+
+      // ALL CONDITIONS MUST MATCH
+      return (
+        matchesSearch &&
+        matchesDepartment &&
+        matchesStatus
+      );
+
+    });
+
+    // Update table data
+    this.userData.set(filteredUsers);
+    console.log('FILTERED USERS:', filteredUsers);
+  }
+
+
+
 
 //  SEARCH QUERY
  giveToBehavior(){
@@ -171,8 +224,15 @@ fetchStaffData() {
  searchFunction(search: string){
    console.log('SEARCH VALUE:', search);
   this.userQuery.search = search
-  this.fetchStaffData()
+  this.filterUsers()
  }
+
+
+//  FILTER
+filterFunction(filter: string){
+  this.userQuery.department = filter
+   this.filterUsers()
+}
 
  }
   

@@ -7,12 +7,14 @@
 
 <div  class="mx-8 mt-10 flex items-center justify-center">
   <form form="ngForm">
+    @if (usersQuery.data()?.[0]; as user) {
     <div  class="grid grid-cols-2 md:gap-x-30 gap-y-5 ">
               <div class="flex flex-col">
                 <label>First name</label>
                 <input
                   type="text"
                   name="firstName"
+                  [(ngModel)]="user.fname"
                   placeholder="First name"
                   class="md:w-FULL [550px] border border-gray-400 py-2 px-3 rounded-[8px]"
                 >
@@ -20,47 +22,44 @@
 
               <div class="flex flex-col">
                 <label>Last name</label>
-              <input
-                type="text"
-                name="lastName"
-                placeholder="Last name"
-                class="w-full [550px] border border-gray-400 py-2 px-3 rounded-[8px]"
-              >
+                <input
+                  type="text"
+                  name="lastName"
+                  [(ngModel)]="user.lname"
+                  placeholder="Last name"
+                  class="w-full [550px] border border-gray-400 py-2 px-3 rounded-[8px]"
+                >
               </div>
-          <!-- </div> -->
+          
 
-
-
-
-              <!-- <div class="flex justify-between"> -->
-                  <div class="flex flex-col relative left- 40">
-                  <label>Gender</label>
-                <select class="w-full [250px] border border-gray-400 py-2 px-3 rounded-[8px]">
-                  <option value="">Select Gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                </select>
-                </div>
+              <div class="flex flex-col ">
+                <label>Gender;</label>
+                  <input
+                    type="text"
+                    name="gender"
+                    [(ngModel)]="user.gender"
+                    placeholder="Email"
+                    class="full w-[550px] border border-gray-400 py-2 px-3 rounded-[8px]"
+                  >
+              </div>
 
                 <div class="flex flex-col relative right- 40">
                   <label>Date of birth</label>
                   <input
-                    type="date"
+                    type="text"
                     name="dob"
+                    [(ngModel)]="user.dob"
                     placeholder="Enter your date of birth"
                     class="w-full [250px] border border-gray-400 py-2 px-3 rounded-[8px]">
                 </div>
-                <!-- </div> -->
-              <!-- </div> -->
 
 
-
-              <!-- <div class="grid grid-cols-2 md:gap-30"> -->
               <div class="flex flex-col">
                 <label>Unit</label>
               <input
                 type="text"
                 name="unit"
+                [(ngModel)]="user.department"
                 placeholder="Department"
                 class="md:w-full [550px] border border-gray-400 py-2 px-3 rounded-[8px]"
               >
@@ -71,12 +70,13 @@
               <input
                 type="email"
                 name="email"
+                [(ngModel)]="user.email"
                 placeholder="Email"
                 class="full w-[550px] border border-gray-400 py-2 px-3 rounded-[8px]"
               >
               </div>
             </div>
-
+          }
             </form>
 
      </div>

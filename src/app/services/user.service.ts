@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environment';
-import { Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { User, UserQuery } from '../models/user.model';
 
 @Injectable({
@@ -11,9 +11,9 @@ export class UserService {
 
   constructor(private http: HttpClient){}
 
-  getUser(): Observable<User[]> {
-    return this.http.get<User[]>(`${environment.staffApi}`);
-  }
+  // getUser(): Observable<User[]> {
+  //   return this.http.get<User[]>(`${environment.staffApi}`);
+  // }
 
   // getUser(item: User):Observable<User[]>{
   //   // let url = (`${environment.staffApi}`)
@@ -31,8 +31,10 @@ export class UserService {
 
 
 
-// getUser(item: User): Observable<User[]> {
-//   return this.http.get<User[]>(environment.staffApi);
-// }
 
+ getUser(): Promise<User[]> {
+    return firstValueFrom(
+      this.http.get<User[]>(environment.staffApi)
+    );
+  }
 }

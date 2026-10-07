@@ -1,15 +1,21 @@
 import { Component } from '@angular/core';
-import { LocationStrategy } from '@angular/common';
+import { CommonModule, LocationStrategy } from '@angular/common';
+import { UserService } from '../services/user.service';
+import { injectQuery } from '@tanstack/angular-query-experimental';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-profile',
-  imports: [],
+  imports: [FormsModule, CommonModule],
   templateUrl: './profile.html',
   styleUrl: './profile.css',
 })
 export class Profile {
 
-   constructor(private location: LocationStrategy){}
+     // TANSTACK QUERY
+    usersQuery = injectQuery(() => ({ queryKey: ['users'], queryFn: () => this.userService.getUser()}));
+
+   constructor(private location: LocationStrategy,  private userService: UserService){}
 
   goBack(){
     this.location.back()
