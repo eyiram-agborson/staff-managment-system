@@ -25,16 +25,13 @@ export class User {
   lname!: string;
   email!: string;
   phone!: string;
+  dob!: string;
   gender!: 'male' | 'female';
   position!: string;
   role!: 'user' | 'admin';
   department!: string;
   status!: 'active' | 'inactive';
-  // search?: string;
-
-  //  page?: number;
-  // limit?: number;
-  // totalPage?: number;
+  
 }
 
 export class UserQuery {

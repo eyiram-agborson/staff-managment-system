@@ -5,9 +5,16 @@ import { routes } from './app.routes';
 import { en_US, provideNzI18n } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
+import { provideTanStackQuery, QueryClient } from '@tanstack/angular-query-experimental';
+
 
 registerLocaleData(en);
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideBrowserGlobalErrorListeners(), provideRouter(routes), provideNzI18n(en_US), provideHttpClient()],
+  providers: [provideBrowserGlobalErrorListeners(), provideRouter(routes), provideNzI18n(en_US), provideHttpClient(),
+
+    
+    provideHttpClient(),
+    provideTanStackQuery(new QueryClient()),
+  ],
 };

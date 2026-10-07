@@ -236,15 +236,31 @@
             </h1>
           </div>
   
+          <!-- FILTER DEPARTMENT -->
               <div class="fle x-justify-center text-center mx-3 mt-10">
-                <select
-                class="border w-full px-3 py-2 rounded-[8px]"
+                 <select
+                  [(ngModel)]="userQuery.department"
+                  (change)="filterFunction(userQuery.department)"
+                  class="border border-gray-400 w-full px-3 py-2 rounded-[8px]"
                 >
-                    <option value="">Select department</option>
-                    <option value="finance">Finance</option>
-                    <option value="business">Business</option>
-                    <option value="operations">Operations</option>
-                    <option value="technology">Technology</option>
+                  <option value="">Select department</option>
+                  <option value="Finance">Finance</option>
+                  <option value="Business">Business</option>
+                  <option value="Operations">Operations</option>
+                  <option value="Technology">Technology</option>
+                </select>
+              </div>
+
+              <!-- FILTER STATUS -->
+                <div class="fle x-justify-center text-center mx-3 mt-10">
+                 <select
+                  [(ngModel)]="userQuery.status"
+                  (change)="filterFunction(userQuery.department)"
+                  class="border border-gray-400 w-full px-3 py-2 rounded-[8px]"
+                >
+                  <option value="">Select department</option>
+                  <option value="inactive">Inactive</option>
+                  <option value="active">Active</option>
                 </select>
               </div>
 

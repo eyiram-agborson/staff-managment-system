@@ -10,7 +10,8 @@
       "position": "HR Officer",
       "phone": "0241234567",
       "status": "active",
-       "gender":"female"
+       "gender":"female",
+       "dob": "2/03/2026"
     },
     {
       "id": "2",
@@ -22,7 +23,8 @@
       "position": "Software Developer",
       "phone": "0202345678",
       "status": "active",
-      "gender":"male"
+      "gender":"male",
+      "dob": "20/03/2025"
     },
     {
       "id": "3",
@@ -34,7 +36,8 @@
       "position": "Accountant",
       "phone": "0553456789",
       "status": "active",
-      "gender":"female"
+      "gender":"female",
+      "dob": "2/03/2026"
     },
     {
       "id": "4",
@@ -46,7 +49,8 @@
       "position": "Marketing Officer",
       "phone": "0274567890",
       "status": "active",
-      "gender":"male"
+      "gender":"male",
+      "dob": "12/03/2023"
     },
     {
       "id": "5",
@@ -58,7 +62,8 @@
       "position": "Operations Officer",
       "phone": "0545678901",
       "status": "inactive",
-      "gender":"female"
+      "gender":"female",
+      "dob": "2/03/2026"
     },
     {
       "id": "6",
@@ -70,7 +75,8 @@
       "position": "Systems Administrator",
       "phone": "0266789012",
       "status": "active",
-      "gender":"male"
+      "gender":"male",
+      "dob": "02/03/2026"
     },
     {
       "id": "7",
@@ -81,7 +87,8 @@
       "department": "Management",
       "position": "Administrator",
       "phone": "0247890123",
-      "status": "active"
+      "status": "active",
+      "dob": "2/03/2022"
     }
   ],
   "tasks": [
