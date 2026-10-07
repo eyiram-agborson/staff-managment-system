@@ -11,6 +11,7 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Task } from '../models/task.model';
 import { TaskService } from '../services/task.service';
 import { RoleService } from '../services/role.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tasks',
@@ -52,7 +53,8 @@ export class Tasks implements OnInit {
 
   constructor(
     private taskService: TaskService, private cdr: ChangeDetectorRef,
-    private roleService: RoleService, private notification: NzNotificationService
+    private roleService: RoleService, private notification: NzNotificationService,
+    private router:Router
   ) {}
 
   ngOnInit(): void {
@@ -98,6 +100,10 @@ export class Tasks implements OnInit {
 
     this.isAddTask = true;
   }
+
+//    openAddTask(): void {
+//   this.router.navigate(['/tasks/add']);
+// }
 
   closeAddTask(): void {
     this.isAddTask = false;
