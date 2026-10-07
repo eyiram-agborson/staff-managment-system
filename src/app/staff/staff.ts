@@ -1,32 +1,73 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserService } from '../services/user.service';
+import { User, UserQuery } from '../models/user.model';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
+import { signal } from '@angular/core';
 
 @Component({
   selector: 'app-staff',
-  imports: [],
+  imports: [CommonModule, FormsModule],
   templateUrl: './staff.html',
   styleUrl: './staff.css',
 })
-export class Staff {
+export class Staff implements OnInit {
 
-
-  constructor(private router: Router) { }
-
-  
   // new project
   isModalOpen = false
   deleteModal = false
   profileModal = false
   isFilterModal = false
   isAddStaffOpen = false
+  searchQuery$ = new Subject<string>()
+  searchQuery = ""
+  user: User
+  // userQuery: UserQuery
+  userQuery = new UserQuery();
+ 
 
-  openModal1(){
-    this.isModalOpen = !this.isModalOpen
+  // userData: User[] = []
+  userData = signal<User[]>([]);
+
+
+    constructor(private router: Router, private userService: UserService) { 
+      this.searchQuery$.pipe(debounceTime(500), distinctUntilChanged()).subscribe((value: string)=>{
+        this.searchFunction(value)
+      })
+
+      this.user = new User
+      this.userQuery = new UserQuery
+     }
+
+
+
+  ngOnInit(): void {
+    this.fetchStaffData()
   }
 
-   closeModal1(){
-    this.isModalOpen = false
-  }
+
+
+  // openModal1(){
+  //   this.isModalOpen = !this.isModalOpen
+  // }
+
+  //  closeModal1(){
+  //   this.isModalOpen = false
+  // }
+
+selectedUserId: number | null = null;
+
+openModal1(userId: number) {
+  this.isModalOpen = !this.isModalOpen;
+  this.selectedUserId = userId;
+}
+
+closeModal1() {
+  this.isModalOpen = false;
+  this.selectedUserId = null;
+}
 
   isEditModalOpen= false
   editModalOpen(){
@@ -71,7 +112,35 @@ export class Staff {
   this.isAddStaffOpen = false
  }
 
+// API CALL
+ fetchStaffData(){
+  this.userService.getUser(this.userQuery).subscribe({
+    next: (res)=>{
+      console.log("User API data",res)
+      // this.userData = res;
+      this.userData.set(res);
+      console.log("User data",this.userData())
+    },
+    error: (err)=>{
+      console.log("Error fetching user data",err)
+    },
+    complete: ()=>{
+      console.log("User data fetch complete")
+    }
+  })
  }
 
+//  SEARCH QUERY
+ giveToBehavior(){
+  this.searchQuery$.next(this.searchQuery)
+ }
+
+ searchFunction(search: string){
+   console.log('SEARCH VALUE:', search);
+  this.userQuery.search = search
+  this.fetchStaffData()
+ }
+
+ }
   
 

@@ -5,12 +5,4 @@ import { Observable } from 'rxjs/internal/Observable';
 @Injectable({
   providedIn: 'root',
 })
-export class User {
-
-  constructor(private http: HttpClient){}
-
-  getUser():Observable<any> {
-    return this.http.get<any>('/api/user');
-  }
-
-}
+export class RoleService {}
