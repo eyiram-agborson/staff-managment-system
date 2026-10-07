@@ -1,28 +1,16 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/internal/Observable';
-
-export type UserRole = 'employee' | 'admin';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoleService {
 
-  // Mock current user for now
-  private currentRole: UserRole = 'employee';
-  private currentUser = 'Ama';
-
-  getRole(): UserRole {
-    return this.currentRole;
-  }
+  // Replace current user with Kojo if you want to test for normal user
+  private currentUser = 'Kojo';
+  // private currentUser = 'Kojo';
 
   getCurrentUser(): string {
     return this.currentUser;
-  }
-
-  setRole(role: UserRole): void {
-    this.currentRole = role;
   }
 
   setCurrentUser(name: string): void {
@@ -30,6 +18,6 @@ export class RoleService {
   }
 
   isAdmin(): boolean {
-    return this.currentRole === 'admin';
+    return this.currentUser === 'Ama';
   }
 }

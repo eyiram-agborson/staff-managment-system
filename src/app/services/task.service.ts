@@ -30,5 +30,9 @@ export class TaskService {
     return this.http.put<Task>(url, task)
   }
 
+  getTaskById(id: number): Observable<Task> {
+    const url = `${environment.taskApi}/${id}`
+  return this.http.get<Task>(url);
+}
 
 }

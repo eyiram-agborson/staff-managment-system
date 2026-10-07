@@ -7,9 +7,11 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzDropdownModule } from 'ng-zorro-antd/dropdown';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzInputModule } from 'ng-zorro-antd/input';
-
+import { Router } from '@angular/router';
 import { Task } from '../models/task.model';
 import { TaskService } from '../services/task.service';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { RoleService } from '../services/role.service';
 
 @Component({
   selector: 'app-tasks',
@@ -50,11 +52,19 @@ export class Tasks implements OnInit {
   // Currently selected task
   selectedTask: Task | null = null;
 
-  constructor(private taskService: TaskService, private cdr: ChangeDetectorRef
+  constructor(private taskService: TaskService, 
+    private cdr: ChangeDetectorRef, 
+    private router: Router,
+      private roleService: RoleService,
+  private notification: NzNotificationService
 ) {}
 
   ngOnInit(): void {
     this.getTasks();
+  }
+
+  goToAdminTasks(): void {
+    this.router.navigate(['/tasks/admin']);
   }
 
   // GET TASKS
@@ -141,38 +151,44 @@ export class Tasks implements OnInit {
     }
 
     //Delete
-confirmDeleteTask(): void {
-  if (!this.selectedTask) {
-    return;
-  }
-  const taskId = this.selectedTask.id;
+    confirmDeleteTask(): void {
+      if (!this.selectedTask) {
+        return;
+      }
+      const taskId = this.selectedTask.id;
 
-  this.isDeleteTask = false;
-  this.selectedTask = null;
+      this.isDeleteTask = false;
+      this.selectedTask = null;
 
+      this.taskService.deleteTask(taskId).subscribe({
+        next: (res) => {
+          console.log('Task deleted', res);
+          this.getTasks();
 
+          this.listOfTasks = this.listOfTasks.filter(
+            task => task.id !== this.selectedTask?.id
+          );
 
-  this.taskService.deleteTask(taskId).subscribe({
-    next: (res) => {
-      console.log('Task deleted', res);
-      this.getTasks();
-
-      this.listOfTasks = this.listOfTasks.filter(
-        task => task.id !== this.selectedTask?.id
-      );
-
-      this.closeDeleteTaskModal();
-    },
-    error: (err) => {
-      console.error('Error deleting task', err);
+          this.closeDeleteTaskModal();
+        },
+        error: (err) => {
+          console.error('Error deleting task', err);
+        }
+      });
     }
-  });
-}
 
   // ADD TASK
   openAddTask(): void {
-    this.isAddTask = true;
-    console.log('CLICKD')
+  if (!this.roleService.isAdmin()) {
+    this.notification.error(
+      'Access Denied',
+      'You do not have permission to add tasks.'
+    );
+    return;
+  }
+
+  this.isAddTask = true;
+
   }
 
   closeAddTask(): void {
@@ -182,7 +198,15 @@ confirmDeleteTask(): void {
 
   // ASSIGN TASK
   openAssignTask(): void {
-    this.isAssignTask = true;
+    if (!this.roleService.isAdmin()) {
+    this.notification.error(
+      'Access Denied',
+      'You do not have permission to assign tasks.'
+    );
+    return;
+  }
+
+  this.isAssignTask = true;
   }
 
   closeAssignTask(): void {
@@ -191,7 +215,13 @@ confirmDeleteTask(): void {
 
   // VIEW TASK
   viewTask(task: Task): void {
-    this.selectedTask = task;
+    if (!this.roleService.isAdmin() && task.assignedTo === 'Ama') {
+    this.notification.error(
+      'Access Denied',
+      'You do not have permission to view this task.'
+    );
+    return;
+  }
     this.isViewTask = true;
   }
 
@@ -202,8 +232,15 @@ confirmDeleteTask(): void {
 
   // EDIT TASK
   editTask(task: Task): void {
-    this.selectedTask = { ...task };
-    this.isEditTask = true;
+    if (!this.roleService.isAdmin()) {
+    this.notification.error(
+      'Access Denied',
+      'You do not have permission to assign tasks.'
+    );
+    return;
+  }
+
+  this.isEditTask = true;
   }
 
   closeEditTask(): void {
@@ -213,7 +250,13 @@ confirmDeleteTask(): void {
 
   // DELETE TASK
   deleteTask(task: Task): void {
-    this.selectedTask = task;
+    if (!this.roleService.isAdmin()) {
+    this.notification.error(
+      'Access Denied',
+      'You do not have permission to delete tasks.'
+    );
+    return;
+  }
     this.isDeleteTask = true;
   }
 
