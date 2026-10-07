@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { PageLayout } from './page-layout/page-layout';
 import { Dashboard } from './dashboard/dashboard';
+import { adminGuard } from './guards/admin-guard';
 
 export const routes: Routes = [
 {
@@ -20,7 +21,11 @@ export const routes: Routes = [
         },
         {
             path:'tasks', loadComponent: ()=> import('./tasks/tasks').then(m => m.Tasks)
-        }
+        },
+        {   path: 'tasks/add', loadComponent: () => import('./tasks/add-task/add-task').then(m => m.AddTask),
+            canActivate: [adminGuard]
+}
+
     ]
 }
 ];

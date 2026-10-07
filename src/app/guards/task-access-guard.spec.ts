@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { CanActivateFn } from '@angular/router';
 
-import { employeeProfileGuard } from './employee-profile-guard';
+import { taskAccessGuard } from './task-access-guard';
 
-describe('employeeProfileGuard', () => {
+describe('taskAccessGuard', () => {
   const executeGuard: CanActivateFn = (...guardParameters) =>
-    TestBed.runInInjectionContext(() => employeeProfileGuard(...guardParameters));
+    TestBed.runInInjectionContext(() => taskAccessGuard(...guardParameters));
 
   beforeEach(() => {
     TestBed.configureTestingModule({});

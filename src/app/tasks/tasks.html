@@ -17,16 +17,18 @@
       Assign Task
     </button>
 
-    <nz-select nzAllowClear nzPlaceHolder="Status" class="w-full md:w-[150px]">
-      <nz-option nzValue="Pending" nzLabel="Pending" />
-      <nz-option nzValue="In-Progress" nzLabel="In-Progress" />
-      <nz-option nzValue="Completed" nzLabel="Completed" />
+    <nz-select nzAllowClear nzPlaceHolder="Status" [(ngModel)]="selectedStatus"
+  (ngModelChange)="filterTasks()" class="w-full md:w-[150px]">
+      <nz-option nzValue="pending" nzLabel="Pending" />
+      <nz-option nzValue="in-Progress" nzLabel="In-Progress" />
+      <nz-option nzValue="completed" nzLabel="Completed" />
     </nz-select>
 
-    <nz-select nzAllowClear nzPlaceHolder="Priority" class="w-full md:w-[150px]">
-      <nz-option nzValue="High" nzLabel="High" />
-      <nz-option nzValue="Medium" nzLabel="Medium" />
-      <nz-option nzValue="Low" nzLabel="Low" />
+    <nz-select nzAllowClear nzPlaceHolder="Priority" [(ngModel)]="selectedPriority"
+  (ngModelChange)="filterTasks()" class="w-full md:w-[150px]">
+      <nz-option nzValue="high" nzLabel="High" />
+      <nz-option nzValue="medium" nzLabel="Medium" />
+      <nz-option nzValue="low" nzLabel="Low" />
     </nz-select>
     </div>
   
@@ -36,7 +38,7 @@
 
   <!-- Table -->
 <div class="mx-4 overflow-x-auto rounded-lg border border-gray-200 bg-white md:px-5">
-    <nz-table #taskTable [nzData]="listOfTasks" [nzPageSize]="5">
+    <nz-table #taskTable [nzData]="filteredTasks" [nzPageSize]="5">
       <thead>
         <tr>
           <th>Task Id</th>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, signal} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TaskService } from '../services/task.service';
 
@@ -9,9 +9,10 @@ import { TaskService } from '../services/task.service';
   styleUrl: './dashboard.css',
 })
 export class Dashboard implements OnInit {
-  myTaskCount = 0;
-  totalPendingTasks = 0;
-  totalCompletedTasks = 0;
+  // myTaskCount = 0;
+  myTaskCount = signal(0);
+  totalPendingTasks = signal(0);
+  totalCompletedTasks = signal(0);
 
   constructor(private taskService:TaskService, private cdr: ChangeDetectorRef){};
 
@@ -26,8 +27,9 @@ export class Dashboard implements OnInit {
         next: (res) => {
           const myTasks = res.filter(
           task => task.assignedTo === 'Ama');
-          this.myTaskCount = myTasks.length;
+          this.myTaskCount.set(myTasks.length);
             this.cdr.detectChanges();
+            
         },
         error: (err)=>{
           console.log('Error fetching tasks', err)
@@ -45,7 +47,7 @@ export class Dashboard implements OnInit {
                return count;
             },0)
 
-            this.totalPendingTasks = pendingTasks;``
+            this.totalPendingTasks.set(pendingTasks);
           }
         })
       }
@@ -70,7 +72,7 @@ export class Dashboard implements OnInit {
             task => task.status === 'completed' && task.assignedTo === 'Ama'
           );
 
-          this.totalCompletedTasks = completedTasks.length;
+          this.totalCompletedTasks.set(completedTasks.length);
           this.cdr.detectChanges();
         }
       })
