@@ -30,27 +30,19 @@ export class Profile implements OnInit{
 
 
   goBack(){
-    const item = this.route.snapshot.queryParamMap.get('staffId')
-    this.staffid = item
-
     this.location.back()
   }
 
 
   passStaffId(){
-    this.staffid =
-      this.route.snapshot.queryParamMap.get('staffId');
+    this.staffid = this.route.snapshot.queryParamMap.get('staffId');
 
-    this.users = JSON.parse(
-      localStorage.getItem('users') || '[]'
-    );
+    this.users = JSON.parse( localStorage.getItem('users') || '[]');
   
-    this.user = this.users.find(
-      user => String(user.id) === this.staffid
-    );
+    this.user = this.users.find( user => String(user.id) === this.staffid ); // it searching through the users array to find one specific user whose ID matches
 
-    console.log('STAFF ID:', this.staffid);
-    console.log('SELECTED USER:', this.user);
+    console.log('Staff id:', this.staffid);
+    console.log('Selected user:', this.user);
   }
 
 

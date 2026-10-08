@@ -6,7 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class RoleService {
 
-  private currentUser = new BehaviorSubject<string>('Ama');
+  private currentUser = new BehaviorSubject<string>('Kojo');
 
   getCurrentUser(): string {
     return this.currentUser.value;

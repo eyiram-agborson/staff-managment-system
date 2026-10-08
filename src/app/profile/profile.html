@@ -1,11 +1,19 @@
-   <div class="mt-10 mx-8">
+   
+
+      <div class="mt-10 mx-8">
     <button (click)="goBack()" class="flex items-center gap-2 cursor-pointer">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-move-left preview-icon"><path d="M6 8L2 12L6 16"/><path d="M2 12H22"/></svg>
         Back
     </button>
 </div>
 
+<div class="mt-10">
+<h1 class="mx-40 ">Profile</h1>
+</div>
+
+
 <div  class="mx-8 mt-10 flex items-center justify-center">
+
   <form form="ngForm">
     <!-- @if (usersQuery.data()?.[0]; as user) { -->
       @if (user) {

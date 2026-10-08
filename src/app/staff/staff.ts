@@ -51,15 +51,15 @@ export class Staff implements OnInit {
       this.user = new User
       // this.userQuery = new UserQuery
 
-       effect(() => {
-        const users = this.usersQuery.data();
-        if (users) {
-          localStorage.setItem('users', JSON.stringify(users));
+      //  effect(() => {
+      //   const users = this.usersQuery.data();
+      //   if (users) {
+      //     localStorage.setItem('users', JSON.stringify(users));
 
-          console.log('Users saved to localStorage:', users);
-        }
+      //     console.log('Users saved to localStorage:', users);
+      //   }
 
-      });
+      // });
      }
 
 

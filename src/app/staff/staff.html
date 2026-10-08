@@ -1,5 +1,7 @@
 <div class="mt-8 mx-8 ">
 
+  <h1>Staff</h1>
+
 <!-- EDIT STAFF -->
  @if(isEditModalOpen === true){
 <div  class="fixed inset-0 bg-black/50">
@@ -306,6 +308,9 @@
  </div>
  
 
+ <!-- @if (usersQuery.isLoading()) {
+            <p>Loading users...</p>
+          } -->
 
 <!-- TABLES -->
  <div class="overflow-auto whitespace-nowrap mt-5">
@@ -350,7 +355,7 @@
             <button (click)="openModal1(item.id)">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ellipsis-vertical preview-icon hover:text-blue-400"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>
                 <!-- @if(isModalOpen === true){ -->
-                 @if(isModalOpen && selectedUserId === item.id){
+                 @if(isModalOpen && selectedUserId === item.id){ 
                 <div class="right-5 mx- fixed bg-white border-2 border-gray-500 h-fit [8rem] rounded-[8px]">
                     <div class="mt-5">
                             <p class="flex gap-2 px-4 hover:bg-blue-100 text-[20px] md:text-[16px]">
