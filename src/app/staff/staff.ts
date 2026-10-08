@@ -173,44 +173,44 @@ filterUsers() {
     const search = this.userQuery.search?.trim().toLowerCase() ?? '';
     const department = this.userQuery.department;
     const status = this.userQuery.status;
-    const filteredUsers = users.filter(user => {
+    // const filteredUsers = users.filter(user => {
 
-      // Full name
-      const fullName =
-        `${user.fname} ${user.lname}`.toLowerCase();
-
-
-      // SEARCH
-      const matchesSearch =
-        !search ||
-        fullName.includes(search) ||
-        user.email.toLowerCase().includes(search) ||
-        user.department.toLowerCase().includes(search) ||
-        user.position.toLowerCase().includes(search);
-
-      // DEPARTMENT
-      const matchesDepartment =
-        !department ||
-        user.department === department;
-
-      // STATUS
-      const matchesStatus =
-        !status ||
-        user.status === status;
+    //   // Full name
+    //   const fullName =
+    //     `${user.fname} ${user.lname}`.toLowerCase();
 
 
-      // ALL CONDITIONS MUST MATCH
-      return (
-        matchesSearch &&
-        matchesDepartment &&
-        matchesStatus
-      );
+    //   // SEARCH
+    //   const matchesSearch =
+    //     !search ||
+    //     fullName.includes(search) ||
+    //     user.email.toLowerCase().includes(search) ||
+    //     user.department.toLowerCase().includes(search) ||
+    //     user.position.toLowerCase().includes(search);
 
-    });
+    //   // DEPARTMENT
+    //   const matchesDepartment =
+    //     !department ||
+    //     user.department === department;
+
+    //   // STATUS
+    //   const matchesStatus =
+    //     !status ||
+    //     user.status === status;
+
+
+    //   // ALL CONDITIONS MUST MATCH
+    //   return (
+    //     matchesSearch &&
+    //     matchesDepartment &&
+    //     matchesStatus
+    //   );
+
+    // });
 
     // Update table data
-    this.userData.set(filteredUsers);
-    console.log('FILTERED USERS:', filteredUsers);
+    // this.userData.set(filteredUsers);
+    // console.log('FILTERED USERS:', filteredUsers);
   }
 
 

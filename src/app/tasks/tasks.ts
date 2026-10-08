@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ChangeDetectorRef } from '@angular/core';
-
+import { injectQuery } from '@tanstack/angular-query-experimental';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzModalModule } from 'ng-zorro-antd/modal';
@@ -13,6 +13,7 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Task } from '../models/task.model';
 import { TaskService } from '../services/task.service';
 import { RoleService } from '../services/role.service';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-tasks',
@@ -65,12 +66,18 @@ export class Tasks implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getTasks();
-
+    // this.getTasks();
     this.roleService.getCurrentUser$().subscribe(user => {
       this.currentUser = user;
     });
   }
+
+  //TanStack query implementation
+  readonly tasksQuery = injectQuery(()=>({
+        queryKey: ['tasks'],
+        queryFn: ()=> lastValueFrom(this.taskService.getTasks())
+  })
+  )
 
   // GET TASKS
   getTasks(): void {
