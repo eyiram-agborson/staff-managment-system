@@ -1,10 +1,11 @@
 import { Component, OnInit, ChangeDetectorRef, signal} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TaskService } from '../services/task.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [RouterLink],
+  imports: [RouterLink, DatePipe],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
@@ -13,6 +14,7 @@ export class Dashboard implements OnInit {
   myTaskCount = signal(0);
   totalPendingTasks = signal(0);
   totalCompletedTasks = signal(0);
+  today = new Date();
 
   constructor(private taskService:TaskService, private cdr: ChangeDetectorRef){};
 

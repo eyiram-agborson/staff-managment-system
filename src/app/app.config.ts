@@ -12,9 +12,6 @@ registerLocaleData(en);
 
 export const appConfig: ApplicationConfig = {
   providers: [provideBrowserGlobalErrorListeners(), provideRouter(routes), provideNzI18n(en_US), provideHttpClient(),
-
-    
-    provideHttpClient(),
     provideTanStackQuery(new QueryClient()),
   ],
 };
