@@ -11,7 +11,7 @@
       "phone": "0241234567",
       "status": "active",
        "gender":"female",
-       "dob": "2/03/2026"
+       "dob": "2021-09-09T00:00:00"
     },
     {
       "id": "2",
@@ -24,7 +24,7 @@
       "phone": "0202345678",
       "status": "active",
       "gender":"male",
-      "dob": "20/03/2025"
+      "dob": "2026-02-03T00:00:00"
     },
     {
       "id": "3",
@@ -37,7 +37,7 @@
       "phone": "0553456789",
       "status": "active",
       "gender":"female",
-      "dob": "2/03/2026"
+      "dob": "2025-05-06T00:00:00"
     },
     {
       "id": "4",
@@ -50,7 +50,7 @@
       "phone": "0274567890",
       "status": "active",
       "gender":"male",
-      "dob": "12/03/2023"
+      "dob": "2026-02-03T00:00:00"
     },
     {
       "id": "5",
@@ -63,7 +63,7 @@
       "phone": "0545678901",
       "status": "inactive",
       "gender":"female",
-      "dob": "2/03/2026"
+      "dob": "2026-02-03T00:00:00"
     },
     {
       "id": "6",
@@ -76,7 +76,7 @@
       "phone": "0266789012",
       "status": "active",
       "gender":"male",
-      "dob": "02/03/2026"
+      "dob": "2023-20-03T00:00:00"
     },
     {
       "id": "7",
@@ -88,7 +88,7 @@
       "position": "Administrator",
       "phone": "0247890123",
       "status": "active",
-      "dob": "2/03/2022"
+      "dob": "2025-10-02T00:00:00"
     }
   ],
   "tasks": [
