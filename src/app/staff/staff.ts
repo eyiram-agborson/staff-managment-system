@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, effect, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { User, UserQuery } from '../models/user.model';
@@ -8,6 +8,8 @@ import { BehaviorSubject, debounceTime, distinctUntilChanged, Subject } from 'rx
 import { signal } from '@angular/core';
 
 import { injectQuery } from '@tanstack/angular-query-experimental';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { RoleService } from '../services/role.service';
 
 @Component({
   selector: 'app-staff',
@@ -30,22 +32,34 @@ export class Staff implements OnInit {
  
   userData = signal<User[]>([]);
 
+  selectedUserId: number | null = null;
+
 
 
     // TANSTACK QUERY
-  usersQuery = injectQuery(() => ({
-    queryKey: ['users'],
-    queryFn: () => this.userService.getUser()
-  }));
+  usersQuery = injectQuery(() => ({ queryKey: ['users'], queryFn: () => this.userService.getUser() }));
+
+ 
 
 
-    constructor(private router: Router, private userService: UserService) { 
+
+    constructor(private router: Router, private userService: UserService,  private notification: NzNotificationService, private roleService: RoleService,) { 
       this.searchQuery$.pipe(debounceTime(500), distinctUntilChanged()).subscribe((value: string)=>{
         this.searchFunction(value)
       })
 
       this.user = new User
-      this.userQuery = new UserQuery
+      // this.userQuery = new UserQuery
+
+       effect(() => {
+        const users = this.usersQuery.data();
+        if (users) {
+          localStorage.setItem('users', JSON.stringify(users));
+
+          console.log('Users saved to localStorage:', users);
+        }
+
+      });
      }
 
 
@@ -56,16 +70,36 @@ export class Staff implements OnInit {
 
 
 
-  // openModal1(){
-  //   this.isModalOpen = !this.isModalOpen
-  // }
 
-  //  closeModal1(){
-  //   this.isModalOpen = false
-  // }
+// permission
+editModalOpenWithPermission(): void {
+  if (!this.roleService.isAdmin()) {
+    this.notification.error(
+      'Access Denied',
+      'You do not have permission to edit users.'
+    );
+    return;
+  }
 
-selectedUserId: number | null = null;
+  this.editModalOpen();
+}
 
+deleteModalOpenWithPermission(): void {
+  if (!this.roleService.isAdmin()) {
+    this.notification.error(
+      'Access Denied',
+      'You do not have permission to delete users.'
+    );
+    return;
+  }
+
+  this.deleteModalOpen();
+}
+
+
+
+
+// open TABLE modal
 openModal1(userId: number) {
   this.isModalOpen = !this.isModalOpen;
   this.selectedUserId = userId;
@@ -75,6 +109,8 @@ closeModal1() {
   this.isModalOpen = false;
   this.selectedUserId = null;
 }
+ 
+
 
   isEditModalOpen= false
   editModalOpen(){
@@ -96,9 +132,11 @@ closeModal1() {
 
 
   // GO TO PROFILE
- goToProfile(){
-  this.router.navigate(['/profile']);
+ goToProfile(id: number){
+  this.router.navigateByUrl(`/profile?staffId=${id}`);
+  console.log("Route ID", id)
  }
+
 
 //  FILTER MODAL
  isfilterModalOpen(){
@@ -122,118 +160,71 @@ closeModal1() {
 
 
 
-// fetchStaffData() {
-//   this.userService.getUser().subscribe({
-//     next: (res) => {
 
-//       const search = this.userQuery.search.trim().toLowerCase();
-//       const department = this.userQuery.department;
-//       const status = this.userQuery.status;
+// FILTER
+filterUsers(): void {
+  const users = this.usersQuery.data() ?? [];
 
-//       const filteredUsers = res.filter(user => {
+  const search = this.userQuery.search?.trim().toLowerCase() ?? '';
+  const department = this.userQuery.department;
+  const status = this.userQuery.status;
 
-//         const fullName =
-//           `${user.fname} ${user.lname}`.toLowerCase();
-
-//         const matchesSearch =
-//           !search ||
-//           fullName.includes(search) ||
-//           user.email.toLowerCase().includes(search) ||
-//           user.department.toLowerCase().includes(search) ||
-//           user.position.toLowerCase().includes(search);
-
-//         const matchesDepartment =
-//           !department ||
-//           user.department === department;
-
-//         const matchesStatus =
-//           !status ||
-//           user.status === status;
-
-//         return (
-//           matchesSearch &&
-//           matchesDepartment &&
-//           matchesStatus
-//         );
-//       });
-
-//       this.userData.set(filteredUsers);
-//     },
-
-//     error: (err) => {
-//       console.error('Error fetching users:', err);
-//     }
-//   });
-// }
-
-
-filterUsers() {
-    // Get users from TanStack Query
-    const users = this.usersQuery.data() ?? [];
-    const search = this.userQuery.search?.trim().toLowerCase() ?? '';
-    const department = this.userQuery.department;
-    const status = this.userQuery.status;
-    const filteredUsers = users.filter(user => {
-
-      // Full name
-      const fullName =
-        `${user.fname} ${user.lname}`.toLowerCase();
-
+  this.userData.set( users.filter(user => {
 
       // SEARCH
-      const matchesSearch =
-        !search ||
-        fullName.includes(search) ||
-        user.email.toLowerCase().includes(search) ||
-        user.department.toLowerCase().includes(search) ||
-        user.position.toLowerCase().includes(search);
+      if (search) { const fullName = `${user.fname} ${user.lname}`.toLowerCase();
+
+        const matchesSearch = fullName.includes(search) ||
+          user.email.toLowerCase().includes(search) ||
+          user.department.toLowerCase().includes(search) ||
+          user.position.toLowerCase().includes(search);
+
+        if (!matchesSearch) {
+          return false;
+        }
+      }
 
       // DEPARTMENT
-      const matchesDepartment =
-        !department ||
-        user.department === department;
+      if (department && user.department !== department) {
+        return false;
+      }
 
       // STATUS
-      const matchesStatus =
-        !status ||
-        user.status === status;
+      if (status && user.status !== status) {
+        return false;
+      }
+
+      return true;
+    })
+  );
+
+  console.log('FILTERED USERS:', this.userData());
+}
 
 
-      // ALL CONDITIONS MUST MATCH
-      return (
-        matchesSearch &&
-        matchesDepartment &&
-        matchesStatus
-      );
-
-    });
-
-    // Update table data
-    this.userData.set(filteredUsers);
-    console.log('FILTERED USERS:', filteredUsers);
-  }
+// DEPARTMENT FILTER
+filterFunction(filter: string): void {
+  this.userQuery.department = filter;
+  this.filterUsers();
+}
 
 
+// STATUS FILTER
+filterStatus(status: string): void {
+  this.userQuery.status = status;
+  this.filterUsers();
+}
 
+
+// SEARCH FILTER
+searchFunction(search: string): void {
+  this.userQuery.search = search;
+  this.filterUsers();
+}
 
 //  SEARCH QUERY
  giveToBehavior(){
   this.searchQuery$.next(this.searchQuery)
  }
 
- searchFunction(search: string){
-   console.log('SEARCH VALUE:', search);
-  this.userQuery.search = search
-  this.filterUsers()
- }
-
-
-//  FILTER
-filterFunction(filter: string){
-  this.userQuery.department = filter
-   this.filterUsers()
 }
-
- }
-  
-

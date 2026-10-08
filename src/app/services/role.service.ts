@@ -20,7 +20,7 @@ export class RoleService {
     this.currentUser.next(name);
   }
 
-  isAdmin(): boolean {
+   isAdmin(): boolean {
     return this.currentUser.value === 'Ama';
   }
 }

@@ -7,7 +7,8 @@
 
 <div  class="mx-8 mt-10 flex items-center justify-center">
   <form form="ngForm">
-    @if (usersQuery.data()?.[0]; as user) {
+    <!-- @if (usersQuery.data()?.[0]; as user) { -->
+      @if (user) {
     <div  class="grid grid-cols-2 md:gap-x-30 gap-y-5 ">
               <div class="flex flex-col">
                 <label>First name</label>
@@ -48,7 +49,7 @@
                   <input
                     type="text"
                     name="dob"
-                    [(ngModel)]="user.dob"
+                    [ngModel]="user.dob | date: 'dd/MM/yyyy'"
                     placeholder="Enter your date of birth"
                     class="w-full [250px] border border-gray-400 py-2 px-3 rounded-[8px]">
                 </div>
