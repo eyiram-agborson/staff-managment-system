@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, effect } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ChangeDetectorRef } from '@angular/core';
 import { injectQuery } from '@tanstack/angular-query-experimental';
@@ -79,6 +79,13 @@ export class Tasks implements OnInit {
   })
   )
 
+  private syncTasks = effect(() => {
+  const tasks = this.tasksQuery.data() ?? [];
+
+  this.listOfTasks = tasks;
+  this.filterTasks();
+});
+
   // GET TASKS
   getTasks(): void {
     this.taskService.getTasks().subscribe({
@@ -92,6 +99,9 @@ export class Tasks implements OnInit {
       }
     });
   }
+
+
+  
 
   // FILTER TASKS
   filterTasks(): void {
@@ -175,7 +185,7 @@ export class Tasks implements OnInit {
     ) {
       this.notification.error(
         'Access Denied',
-        'You can only view tasks assigned to you.'
+        'You can only view the tasks assigned to you.'
       );
       return;
     }

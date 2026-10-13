@@ -35,12 +35,10 @@ export class Staff implements OnInit {
   selectedUserId: number | null = null;
 
 
-
     // TANSTACK QUERY
   usersQuery = injectQuery(() => ({ queryKey: ['users'], queryFn: () => this.userService.getUser() }));
 
  
-
 
 
     constructor(private router: Router, private userService: UserService,  private notification: NzNotificationService, private roleService: RoleService,) { 
